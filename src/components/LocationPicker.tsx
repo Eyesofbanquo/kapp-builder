@@ -1,10 +1,11 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { Box, TextField, List, ListItemButton, ListItemText, Paper, Typography, CircularProgress } from '@mui/material';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { APIProvider, Map, AdvancedMarker, useMap } from '@vis.gl/react-google-maps';
 import type { SelectedLocation } from '../types/event';
 
 const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY ?? '';
+const FALLBACK_CENTER = { lat: 32.9537, lng: -96.7298 }; // 1803 Blake Drive, Richardson TX 75081
 
 interface Props {
   /** Currently selected location; null if none */
@@ -13,18 +14,21 @@ interface Props {
   onChange: (location: SelectedLocation | null) => void;
 }
 
-function MapView({ location }: { location: SelectedLocation }) {
+function MapView({ location, initialCenter }: { location: SelectedLocation | null; initialCenter: { lat: number; lng: number } }) {
   const map = useMap();
 
-  const handleMarkerClick = useCallback(() => {
-    map?.panTo({ lat: location.lat, lng: location.lng });
+  useEffect(() => {
+    if (!location) map?.panTo(initialCenter);
+  }, [map, initialCenter]);
+
+  useEffect(() => {
+    if (location) map?.panTo({ lat: location.lat, lng: location.lng });
   }, [map, location]);
 
+  if (!location) return null;
+
   return (
-    <AdvancedMarker
-      position={{ lat: location.lat, lng: location.lng }}
-      onClick={handleMarkerClick}
-    />
+    <AdvancedMarker position={{ lat: location.lat, lng: location.lng }} />
   );
 }
 
@@ -32,7 +36,15 @@ export default function LocationPicker({ value, onChange }: Props) {
   const [query, setQuery] = useState('');
   const [suggestions, setSuggestions] = useState<google.maps.places.AutocompleteSuggestion[]>([]);
   const [loading, setLoading] = useState(false);
+  const [initialCenter, setInitialCenter] = useState(FALLBACK_CENTER);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(
+      ({ coords }) => setInitialCenter({ lat: coords.latitude, lng: coords.longitude }),
+      () => {} // denied or unavailable — keep fallback
+    );
+  }, []);
 
   const fetchSuggestions = useCallback(async (input: string) => {
     if (!input.trim() || !GOOGLE_MAPS_API_KEY) {
@@ -50,6 +62,8 @@ export default function LocationPicker({ value, onChange }: Props) {
       setLoading(false);
     }
   }, []);
+
+  const MAP_ID = import.meta.env.VITE_GOOGLE_MAPS_MAP_ID
 
   const handleInputChange = (val: string) => {
     setQuery(val);
@@ -129,19 +143,17 @@ export default function LocationPicker({ value, onChange }: Props) {
           )}
         </Box>
 
-        {value && (
-          <Box sx={{ height: 220, borderRadius: 1, overflow: 'hidden', border: '1px solid', borderColor: 'divider' }}>
-            <Map
-              mapId="event-location-map"
-              defaultCenter={{ lat: value.lat, lng: value.lng }}
-              defaultZoom={14}
-              gestureHandling="greedy"
-              disableDefaultUI
-            >
-              <MapView location={value} />
-            </Map>
-          </Box>
-        )}
+        <Box sx={{ height: 220, borderRadius: 1, overflow: 'hidden', border: '1px solid', borderColor: 'divider' }}>
+          <Map
+            mapId={MAP_ID}
+            defaultCenter={initialCenter}
+            defaultZoom={14}
+            gestureHandling="greedy"
+            disableDefaultUI
+          >
+            <MapView location={value} initialCenter={initialCenter} />
+          </Map>
+        </Box>
       </Box>
     </APIProvider>
   );
