@@ -3,9 +3,16 @@ import ArrowBackIosNew from '@mui/icons-material/ArrowBackIosNew';
 import { useNavigation } from '../context/NavigationContext';
 import MainScreen from '../screens/MainScreen';
 import CreateEventScreen from '../screens/CreateEventScreen';
+import AllEventsScreen from '../screens/AllEventsScreen';
 
 export default function NavigationLayout() {
   const { canGoBack, pop, currentScreen } = useNavigation();
+
+  const renderScreen = () => {
+    if (currentScreen === 'createEvent') return <CreateEventScreen />;
+    if (currentScreen === 'allEvents') return <AllEventsScreen />;
+    return <MainScreen />;
+  };
 
   return (
     <Box>
@@ -16,7 +23,7 @@ export default function NavigationLayout() {
           </IconButton>
         )}
       </Box>
-      {currentScreen === 'createEvent' ? <CreateEventScreen /> : <MainScreen />}
+      {renderScreen()}
     </Box>
   );
 }

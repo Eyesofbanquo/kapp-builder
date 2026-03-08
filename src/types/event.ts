@@ -13,3 +13,8 @@ export interface EventFormState {
   time: Dayjs | null;
   location: SelectedLocation | null;
 }
+
+export interface Event extends EventFormState {
+  /** Unique identifier for the stored event */
+  id: string;
+}
