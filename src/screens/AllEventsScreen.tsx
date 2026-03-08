@@ -16,7 +16,7 @@ type SortOrder = 'asc' | 'desc';
 export default function AllEventsScreen(_props: Props) {
   const { events, lastCreatedEventId, clearLastCreatedEventId } = useEventRepository();
   const [searchQuery, setSearchQuery] = useState('');
-  const [sortOrder, setSortOrder] = useState<SortOrder>('asc');
+  const [sortOrder, setSortOrder] = useState<SortOrder>('desc');
   const [editingEvent, setEditingEvent] = useState<Event | null>(null);
 
   const filteredEvents = events.filter((event) =>

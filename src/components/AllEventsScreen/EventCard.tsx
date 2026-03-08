@@ -33,7 +33,7 @@ export default function EventCard({ event, onClick, isNew, onAnimationComplete }
       onAnimationComplete={isNew ? onAnimationComplete : undefined}
     >
       <Card elevation={0}>
-        <CardActionArea onClick={() => onClick(event)}>
+        <CardActionArea onClick={() => onClick(event)} sx={{ '&:hover': { backgroundColor: '#e8f5e9' } }}>
           <Box sx={{ p: 2.5, display: 'flex', flexDirection: 'column', gap: 1 }}>
             <Typography variant="subtitle1" fontWeight={600}>
               {event.title}
