@@ -1,7 +1,7 @@
 import { useState, useCallback, useRef } from 'react';
 import { Box, TextField, List, ListItemButton, ListItemText, Paper, Typography, CircularProgress } from '@mui/material';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import { APIProvider } from '@vis.gl/react-google-maps';
+import { APIProvider, Map, AdvancedMarker, useMap } from '@vis.gl/react-google-maps';
 import type { SelectedLocation } from '../types/event';
 
 const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY ?? '';
@@ -13,7 +13,22 @@ interface Props {
   onChange: (location: SelectedLocation | null) => void;
 }
 
-export default function LocationPicker({ value: _value, onChange }: Props) {
+function MapView({ location }: { location: SelectedLocation }) {
+  const map = useMap();
+
+  const handleMarkerClick = useCallback(() => {
+    map?.panTo({ lat: location.lat, lng: location.lng });
+  }, [map, location]);
+
+  return (
+    <AdvancedMarker
+      position={{ lat: location.lat, lng: location.lng }}
+      onClick={handleMarkerClick}
+    />
+  );
+}
+
+export default function LocationPicker({ value, onChange }: Props) {
   const [query, setQuery] = useState('');
   const [suggestions, setSuggestions] = useState<google.maps.places.AutocompleteSuggestion[]>([]);
   const [loading, setLoading] = useState(false);
@@ -113,6 +128,20 @@ export default function LocationPicker({ value: _value, onChange }: Props) {
             </Paper>
           )}
         </Box>
+
+        {value && (
+          <Box sx={{ height: 220, borderRadius: 1, overflow: 'hidden', border: '1px solid', borderColor: 'divider' }}>
+            <Map
+              mapId="event-location-map"
+              defaultCenter={{ lat: value.lat, lng: value.lng }}
+              defaultZoom={14}
+              gestureHandling="greedy"
+              disableDefaultUI
+            >
+              <MapView location={value} />
+            </Map>
+          </Box>
+        )}
       </Box>
     </APIProvider>
   );
