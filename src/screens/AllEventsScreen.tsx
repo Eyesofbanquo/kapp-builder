@@ -14,9 +14,9 @@ interface Props {
 type SortOrder = 'asc' | 'desc';
 
 export default function AllEventsScreen(_props: Props) {
-  const { events } = useEventRepository();
+  const { events, lastCreatedEventId, clearLastCreatedEventId } = useEventRepository();
   const [searchQuery, setSearchQuery] = useState('');
-  const [sortOrder, setSortOrder] = useState<SortOrder>('asc');
+  const [sortOrder, setSortOrder] = useState<SortOrder>('desc');
   const [editingEvent, setEditingEvent] = useState<Event | null>(null);
 
   const filteredEvents = events.filter((event) =>
@@ -66,7 +66,13 @@ export default function AllEventsScreen(_props: Props) {
           {Object.entries(groupedEvents).map(([monthKey, monthEvents]) => (
             <ToolSection key={monthKey} title={monthKey}>
               {monthEvents.map((event) => (
-                <EventCard key={event.id} event={event} onClick={setEditingEvent} />
+                <EventCard
+                  key={event.id}
+                  event={event}
+                  onClick={setEditingEvent}
+                  isNew={event.id === lastCreatedEventId}
+                  onAnimationComplete={event.id === lastCreatedEventId ? clearLastCreatedEventId : undefined}
+                />
               ))}
             </ToolSection>
           ))}

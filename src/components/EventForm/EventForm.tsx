@@ -27,7 +27,7 @@ const EMPTY_FORM: EventFormState = {
 export default function EventForm({ initialValues, submitLabel, onSubmit, onDelete }: Props) {
   const [form, setForm] = useState<EventFormState>(initialValues ?? EMPTY_FORM);
 
-  const isValid = form.title.trim() && form.date && form.time;
+  const isValid = form.title.trim() && form.date && form.time && form.location;
 
   const handleSubmit = () => {
     onSubmit(form);

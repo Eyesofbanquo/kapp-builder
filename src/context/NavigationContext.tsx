@@ -5,6 +5,7 @@ import type { Screen } from '../types/navigation';
 interface NavigationContextValue {
   push: (screen: Screen) => void;
   pop: () => void;
+  replaceWith: (screen: Screen) => void;
   canGoBack: boolean;
   currentScreen: Screen;
 }
@@ -16,11 +17,12 @@ export function NavigationProvider({ children }: { children: ReactNode }) {
 
   const push = (screen: Screen) => setStack((s) => [...s, screen]);
   const pop = () => setStack((s) => s.slice(0, -1));
+  const replaceWith = (screen: Screen) => setStack((s) => [...s.slice(0, -1), screen]);
   const canGoBack = stack.length > 1;
   const currentScreen = stack[stack.length - 1];
 
   return (
-    <NavigationContext.Provider value={{ push, pop, canGoBack, currentScreen }}>
+    <NavigationContext.Provider value={{ push, pop, replaceWith, canGoBack, currentScreen }}>
       {children}
     </NavigationContext.Provider>
   );
