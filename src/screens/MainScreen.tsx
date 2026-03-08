@@ -23,9 +23,9 @@ export default function MainScreen() {
             />
             <ToolCard
               grouped
-              comingSoon
               title="Show all events"
-              description="Coming soon."
+              description="Browse and manage all your events."
+              onClick={() => push('allEvents')}
             />
           </ToolSection>
 
