@@ -10,6 +10,7 @@ import {
 import { LocalizationProvider, DatePicker, TimePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import type { EventFormState } from '../types/event';
+import LocationPicker from '../components/LocationPicker';
 
 interface Props {
   /** Optional callback fired when the user submits the form */
@@ -71,6 +72,11 @@ export default function CreateEventScreen({ onSubmit }: Props) {
                 value={form.time}
                 onChange={(val) => setForm((f) => ({ ...f, time: val }))}
                 slotProps={{ textField: { fullWidth: true } }}
+              />
+
+              <LocationPicker
+                value={form.location}
+                onChange={(loc) => setForm((f) => ({ ...f, location: loc }))}
               />
 
               <Button
