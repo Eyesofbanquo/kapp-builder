@@ -51,6 +51,8 @@ export default function LocationPicker({ value, onChange }: Props) {
     }
   }, []);
 
+  const MAP_ID = import.meta.env.VITE_GOOGLE_MAPS_ID
+
   const handleInputChange = (val: string) => {
     setQuery(val);
     if (debounceRef.current) clearTimeout(debounceRef.current);
@@ -132,7 +134,7 @@ export default function LocationPicker({ value, onChange }: Props) {
         {value && (
           <Box sx={{ height: 220, borderRadius: 1, overflow: 'hidden', border: '1px solid', borderColor: 'divider' }}>
             <Map
-              mapId="event-location-map"
+              mapId={MAP_ID}
               defaultCenter={{ lat: value.lat, lng: value.lng }}
               defaultZoom={14}
               gestureHandling="greedy"
