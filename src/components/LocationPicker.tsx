@@ -5,7 +5,7 @@ import { APIProvider, Map, AdvancedMarker, useMap } from '@vis.gl/react-google-m
 import type { SelectedLocation } from '../types/event';
 
 const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY ?? '';
-const DEFAULT_CENTER = { lat: 40.7128, lng: -74.006 };
+const FALLBACK_CENTER = { lat: 32.9537, lng: -96.7298 }; // 1803 Blake Drive, Richardson TX 75081
 
 interface Props {
   /** Currently selected location; null if none */
@@ -14,8 +14,12 @@ interface Props {
   onChange: (location: SelectedLocation | null) => void;
 }
 
-function MapView({ location }: { location: SelectedLocation | null }) {
+function MapView({ location, initialCenter }: { location: SelectedLocation | null; initialCenter: { lat: number; lng: number } }) {
   const map = useMap();
+
+  useEffect(() => {
+    if (!location) map?.panTo(initialCenter);
+  }, [map, initialCenter]);
 
   useEffect(() => {
     if (location) map?.panTo({ lat: location.lat, lng: location.lng });
@@ -32,7 +36,15 @@ export default function LocationPicker({ value, onChange }: Props) {
   const [query, setQuery] = useState('');
   const [suggestions, setSuggestions] = useState<google.maps.places.AutocompleteSuggestion[]>([]);
   const [loading, setLoading] = useState(false);
+  const [initialCenter, setInitialCenter] = useState(FALLBACK_CENTER);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(
+      ({ coords }) => setInitialCenter({ lat: coords.latitude, lng: coords.longitude }),
+      () => {} // denied or unavailable — keep fallback
+    );
+  }, []);
 
   const fetchSuggestions = useCallback(async (input: string) => {
     if (!input.trim() || !GOOGLE_MAPS_API_KEY) {
@@ -134,12 +146,12 @@ export default function LocationPicker({ value, onChange }: Props) {
         <Box sx={{ height: 220, borderRadius: 1, overflow: 'hidden', border: '1px solid', borderColor: 'divider' }}>
           <Map
             mapId={MAP_ID}
-            defaultCenter={DEFAULT_CENTER}
+            defaultCenter={initialCenter}
             defaultZoom={14}
             gestureHandling="greedy"
             disableDefaultUI
           >
-            <MapView location={value} />
+            <MapView location={value} initialCenter={initialCenter} />
           </Map>
         </Box>
       </Box>
