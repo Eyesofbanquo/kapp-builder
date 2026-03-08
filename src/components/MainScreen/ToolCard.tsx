@@ -9,12 +9,26 @@ interface Props {
   onClick?: () => void;
   /** When true, removes the outer border (used inside ToolSection) */
   grouped?: boolean;
+  /** When true, shows a pastel-pink hover state to signal the feature is not yet available */
+  comingSoon?: boolean;
 }
 
-export default function ToolCard({ title, description, onClick, grouped }: Props) {
+export default function ToolCard({ title, description, onClick, grouped, comingSoon }: Props) {
   return (
     <Card elevation={0} sx={grouped ? {} : { border: '1px solid', borderColor: 'divider', borderRadius: 2 }}>
-      <CardActionArea onClick={onClick} sx={{ p: 2.5 }}>
+      <CardActionArea
+        onClick={onClick}
+        sx={{
+          p: 2.5,
+          ...(comingSoon && {
+            '&:hover': {
+              backgroundColor: '#fce4ec',
+              '& .MuiTypography-subtitle1': { color: '#880e4f' },
+              '& .MuiTypography-body2': { color: '#ad1457' },
+            },
+          }),
+        }}
+      >
         <Box>
           <Typography variant="subtitle1" fontWeight={600}>
             {title}
