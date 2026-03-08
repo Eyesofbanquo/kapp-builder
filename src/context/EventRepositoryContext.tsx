@@ -6,9 +6,11 @@ import type { EventFormState } from '../types/event';
 
 interface EventRepositoryContextValue {
   events: Event[];
-  addEvent: (formState: EventFormState) => void;
+  addEvent: (formState: EventFormState) => string;
   updateEvent: (id: string, formState: EventFormState) => void;
   deleteEvent: (id: string) => void;
+  lastCreatedEventId: string | null;
+  clearLastCreatedEventId: () => void;
 }
 
 const EventRepositoryContext = createContext<EventRepositoryContextValue | null>(null);
@@ -42,11 +44,17 @@ const MOCK_EVENTS: Event[] = [
 
 export function EventRepositoryProvider({ children }: { children: ReactNode }) {
   const [events, setEvents] = useState<Event[]>(MOCK_EVENTS);
+  const [lastCreatedEventId, setLastCreatedEventId] = useState<string | null>(null);
 
-  const addEvent = (formState: EventFormState) => {
-    const newEvent: Event = { ...formState, id: crypto.randomUUID() };
+  const addEvent = (formState: EventFormState): string => {
+    const id = crypto.randomUUID();
+    const newEvent: Event = { ...formState, id };
     setEvents((previous) => [...previous, newEvent]);
+    setLastCreatedEventId(id);
+    return id;
   };
+
+  const clearLastCreatedEventId = () => setLastCreatedEventId(null);
 
   const updateEvent = (id: string, formState: EventFormState) => {
     setEvents((previous) =>
@@ -59,7 +67,7 @@ export function EventRepositoryProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <EventRepositoryContext.Provider value={{ events, addEvent, updateEvent, deleteEvent }}>
+    <EventRepositoryContext.Provider value={{ events, addEvent, updateEvent, deleteEvent, lastCreatedEventId, clearLastCreatedEventId }}>
       {children}
     </EventRepositoryContext.Provider>
   );

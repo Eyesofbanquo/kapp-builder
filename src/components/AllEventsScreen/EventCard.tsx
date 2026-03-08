@@ -1,6 +1,7 @@
 import { Box, Card, CardActionArea, Typography } from '@mui/material';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import { motion, type Variants } from 'framer-motion';
 import type { Event } from '../../types/event';
 
 interface Props {
@@ -8,31 +9,48 @@ interface Props {
   event: Event;
   /** Called when the card is tapped */
   onClick: (event: Event) => void;
+  /** When true, plays a rattle shake animation on mount */
+  isNew?: boolean;
+  /** Called after the rattle animation finishes */
+  onAnimationComplete?: () => void;
 }
 
-export default function EventCard({ event, onClick }: Props) {
+const rattleVariants: Variants = {
+  rattle: {
+    x: [0, -8, 8, -6, 6, -4, 4, 0],
+    transition: { duration: 0.5, ease: 'easeInOut' as const },
+  },
+};
+
+export default function EventCard({ event, onClick, isNew, onAnimationComplete }: Props) {
   const formattedDate = event.date ? event.date.format('MMM D, YYYY') : '—';
   const formattedTime = event.time ? event.time.format('h:mm A') : '—';
 
   return (
-    <Card elevation={0}>
-      <CardActionArea onClick={() => onClick(event)}>
-        <Box sx={{ p: 2.5, display: 'flex', flexDirection: 'column', gap: 1 }}>
-          <Typography variant="subtitle1" fontWeight={600}>
-            {event.title}
-          </Typography>
-          <Typography variant="body2" color="text.disabled">
-            {event.description}
-          </Typography>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75, mt: 0.5 }}>
-            <CalendarTodayIcon fontSize="small" color="action" />
-            <Typography variant="body2">{formattedDate}</Typography>
-            <Typography variant="body2" color="text.disabled">·</Typography>
-            <AccessTimeIcon fontSize="small" color="action" />
-            <Typography variant="body2">{formattedTime}</Typography>
+    <motion.div
+      animate={isNew ? 'rattle' : undefined}
+      variants={rattleVariants}
+      onAnimationComplete={isNew ? onAnimationComplete : undefined}
+    >
+      <Card elevation={0}>
+        <CardActionArea onClick={() => onClick(event)}>
+          <Box sx={{ p: 2.5, display: 'flex', flexDirection: 'column', gap: 1 }}>
+            <Typography variant="subtitle1" fontWeight={600}>
+              {event.title}
+            </Typography>
+            <Typography variant="body2" color="text.disabled">
+              {event.description}
+            </Typography>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75, mt: 0.5 }}>
+              <CalendarTodayIcon fontSize="small" color="action" />
+              <Typography variant="body2">{formattedDate}</Typography>
+              <Typography variant="body2" color="text.disabled">·</Typography>
+              <AccessTimeIcon fontSize="small" color="action" />
+              <Typography variant="body2">{formattedTime}</Typography>
+            </Box>
           </Box>
-        </Box>
-      </CardActionArea>
-    </Card>
+        </CardActionArea>
+      </Card>
+    </motion.div>
   );
 }

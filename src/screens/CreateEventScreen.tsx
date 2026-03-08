@@ -10,11 +10,11 @@ interface Props {
 
 export default function CreateEventScreen(_props: Props) {
   const { addEvent } = useEventRepository();
-  const { push } = useNavigation();
+  const { replaceWith } = useNavigation();
 
   const handleSubmit = (formState: EventFormState) => {
     addEvent(formState);
-    push('allEvents');
+    replaceWith('allEvents');
   };
 
   return (
