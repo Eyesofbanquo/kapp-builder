@@ -70,7 +70,7 @@ export default function EventForm({ initialValues, submitLabel, onSubmit, onDele
 
         <LocationSection
           value={form.location}
-          onChange={(location) => setForm((previous) => ({ ...previous, location }))}
+          onChange={(location) => setForm((previous) => ({ ...previous, location: location ?? null }))}
         />
 
         <Button
