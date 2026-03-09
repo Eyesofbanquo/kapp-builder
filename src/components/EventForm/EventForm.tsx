@@ -21,13 +21,13 @@ const EMPTY_FORM: EventFormState = {
   description: '',
   date: null,
   time: null,
-  location: null,
+  locationId: null,
 };
 
 export default function EventForm({ initialValues, submitLabel, onSubmit, onDelete }: Props) {
   const [form, setForm] = useState<EventFormState>(initialValues ?? EMPTY_FORM);
 
-  const isValid = form.title.trim() && form.date && form.time && form.location;
+  const isValid = form.title.trim() && form.date && form.time && form.locationId;
 
   const handleSubmit = () => {
     onSubmit(form);
@@ -69,8 +69,8 @@ export default function EventForm({ initialValues, submitLabel, onSubmit, onDele
         />
 
         <LocationSection
-          value={form.location}
-          onChange={(location) => setForm((previous) => ({ ...previous, location: location ?? null }))}
+          value={form.locationId}
+          onChange={(locationId) => setForm((previous) => ({ ...previous, locationId: locationId ?? null }))}
         />
 
         <Button

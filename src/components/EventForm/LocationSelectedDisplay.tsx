@@ -8,9 +8,13 @@ interface Props {
   location: SelectedLocation;
   /** Called when the user wants to pick a different location */
   onChangeLocation: () => void;
+  /** Label for the change button. Defaults to "Change Location" */
+  changeLocationLabel?: string;
+  /** When provided, renders a two-button row with Delete alongside the change button */
+  onDelete?: () => void;
 }
 
-export default function LocationSelectedDisplay({ location, onChangeLocation }: Props) {
+export default function LocationSelectedDisplay({ location, onChangeLocation, changeLocationLabel = 'Change Location', onDelete }: Props) {
   const [toastOpen, setToastOpen] = useState(false);
 
   const handleCopy = () => {
@@ -29,9 +33,20 @@ export default function LocationSelectedDisplay({ location, onChangeLocation }: 
           <ContentCopy fontSize="small" />
         </IconButton>
       </Box>
-      <Button variant="outlined" fullWidth onClick={onChangeLocation}>
-        Change Location
-      </Button>
+      {onDelete ? (
+        <Box sx={{ display: 'flex', gap: 1 }}>
+          <Button variant="outlined" sx={{ flex: 1 }} onClick={onChangeLocation}>
+            {changeLocationLabel}
+          </Button>
+          <Button variant="outlined" color="error" sx={{ flex: 1 }} onClick={onDelete}>
+            Delete
+          </Button>
+        </Box>
+      ) : (
+        <Button variant="outlined" fullWidth onClick={onChangeLocation}>
+          {changeLocationLabel}
+        </Button>
+      )}
       <Snackbar
         open={toastOpen}
         autoHideDuration={2000}

@@ -1,0 +1,14 @@
+[build]
+  command = "npm run build"
+
+[context.production]
+  command = "npm run build"
+
+[context.production.environment]
+  VITE_APP_ENV = "production"
+
+[context.deploy-preview]
+  command = "npm run build:staging"
+
+[context.deploy-preview.environment]
+  VITE_APP_ENV = "staging"

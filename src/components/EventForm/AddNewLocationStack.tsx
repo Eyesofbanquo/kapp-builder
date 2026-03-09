@@ -11,17 +11,25 @@ interface Props {
   onDone: () => void;
   /** Called when the user cancels to return to the button stack */
   onCancel: () => void;
+  /** Label for the save button. Defaults to "Save New Location" */
+  saveLabel?: string;
+  /** Override save behavior. If provided, replaces the default addSavedLocation call */
+  onSave?: (location: SelectedLocation) => void;
 }
 
-export default function AddNewLocationStack({ onChange, onDone, onCancel }: Props) {
+export default function AddNewLocationStack({ onChange, onDone, onCancel, saveLabel = 'Save New Location', onSave }: Props) {
   const [pickedLocation, setPickedLocation] = useState<SelectedLocation | null>(null);
   const { addSavedLocation } = useSavedLocations();
 
   const handleSave = () => {
     if (!pickedLocation) return;
-    addSavedLocation(pickedLocation);
-    onChange(pickedLocation);
-    onDone();
+    if (onSave) {
+      onSave(pickedLocation);
+    } else {
+      addSavedLocation(pickedLocation);
+      onChange(pickedLocation);
+      onDone();
+    }
   };
 
   return (
@@ -34,7 +42,7 @@ export default function AddNewLocationStack({ onChange, onDone, onCancel }: Prop
           onClick={handleSave}
           sx={{ flex: 1 }}
         >
-          Save New Location
+          {saveLabel}
         </Button>
         <Button
           variant="outlined"

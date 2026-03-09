@@ -25,4 +25,6 @@ dist-ssr
 
 CLAUDE.md
 
-.env
+.env*
+
+.claude/*

@@ -1,8 +1,10 @@
 import { Box, Card, CardActionArea, Typography } from '@mui/material';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import PlaceIcon from '@mui/icons-material/Place';
 import { motion, type Variants } from 'framer-motion';
 import type { Event } from '../../types/event';
+import { useSavedLocations } from '../../context/SavedLocationsContext';
 
 interface Props {
   /** The event to display */
@@ -23,6 +25,11 @@ const rattleVariants: Variants = {
 };
 
 export default function EventCard({ event, onClick, isNew, onAnimationComplete }: Props) {
+  const { savedLocations } = useSavedLocations();
+  const location = event.locationId
+    ? savedLocations.find((saved) => saved.id === event.locationId)
+    : null;
+
   const formattedDate = event.date ? event.date.format('MMM D, YYYY') : '—';
   const formattedTime = event.time ? event.time.format('h:mm A') : '—';
 
@@ -48,6 +55,12 @@ export default function EventCard({ event, onClick, isNew, onAnimationComplete }
               <AccessTimeIcon fontSize="small" color="action" />
               <Typography variant="body2">{formattedTime}</Typography>
             </Box>
+            {location && (
+              <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 0.5 }}>
+                <PlaceIcon fontSize="small" color="action" />
+                <Typography variant="body2" color="text.secondary">{location.name}</Typography>
+              </Box>
+            )}
           </Box>
         </CardActionArea>
       </Card>
