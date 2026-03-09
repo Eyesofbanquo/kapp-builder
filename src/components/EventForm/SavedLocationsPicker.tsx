@@ -1,4 +1,4 @@
-import { Box, Button } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import type { SelectedLocation } from '../../types/event';
 import { useSavedLocations } from '../../context/SavedLocationsContext';
 
@@ -22,7 +22,12 @@ export default function SavedLocationsPicker({ onSelect, onCancel }: Props) {
           onClick={() => onSelect(location)}
           sx={{ justifyContent: 'flex-start', textAlign: 'left' }}
         >
-          {location.address}
+          <Box sx={{ textAlign: 'left' }}>
+            <Typography variant="body1">{location.name}</Typography>
+            <Typography variant="body2" color="text.secondary">
+              {location.name !== location.address ? location.address : ''}
+            </Typography>
+          </Box>
         </Button>
       ))}
       <Button fullWidth variant="outlined" color="error" onClick={onCancel}>

@@ -79,12 +79,13 @@ export default function LocationPicker({ value, onChange }: Props) {
     setLoading(true);
     try {
       const place = pred.toPlace();
-      await place.fetchFields({ fields: ['location', 'formattedAddress'] });
+      await place.fetchFields({ fields: ['location', 'formattedAddress', 'displayName'] });
       if (place.location) {
         onChange({
+          name: place.displayName ?? pred.mainText?.text ?? '',
+          address: place.formattedAddress ?? pred.text.text,
           lat: place.location.lat(),
           lng: place.location.lng(),
-          address: place.formattedAddress ?? pred.text.text,
         });
       }
     } catch {
