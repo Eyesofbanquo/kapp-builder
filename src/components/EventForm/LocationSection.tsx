@@ -4,6 +4,7 @@ import LocationButtonStack from './LocationButtonStack';
 import SavedLocationsPicker from './SavedLocationsPicker';
 import AddNewLocationStack from './AddNewLocationStack';
 import LocationSelectedDisplay from './LocationSelectedDisplay';
+import { useSavedLocations } from '../../context/SavedLocationsContext';
 
 type LocationMode = 'buttons' | 'savedPicker' | 'addNew' | 'selected';
 
@@ -14,9 +15,15 @@ interface Props {
   onChange: (locationId: string | null) => void;
 }
 
-export default function LocationSection({ onChange }: Props) {
-  const [mode, setMode] = useState<LocationMode>('buttons');
-  const [selectedLocation, setSelectedLocation] = useState<SelectedLocation | null>(null);
+export default function LocationSection({ value, onChange }: Props) {
+  const { savedLocations } = useSavedLocations();
+
+  const initialLocation = value
+    ? (savedLocations.find((location) => location.id === value) ?? null)
+    : null;
+
+  const [mode, setMode] = useState<LocationMode>(initialLocation ? 'selected' : 'buttons');
+  const [selectedLocation, setSelectedLocation] = useState<SelectedLocation | null>(initialLocation);
 
   if (mode === 'savedPicker') {
     return (
