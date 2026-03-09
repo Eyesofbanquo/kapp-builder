@@ -27,6 +27,12 @@ export default function MainScreen() {
               description="Browse and manage all your events."
               onClick={() => push('allEvents')}
             />
+            <ToolCard
+              grouped
+              title="Locations"
+              description="View and manage your saved locations."
+              onClick={() => push('locations')}
+            />
           </ToolSection>
 
           <ToolSection title="Classes">

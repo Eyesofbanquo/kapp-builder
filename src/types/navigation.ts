@@ -1,1 +1,1 @@
-export type Screen = 'main' | 'createEvent' | 'allEvents';
+export type Screen = 'main' | 'createEvent' | 'allEvents' | 'locations';

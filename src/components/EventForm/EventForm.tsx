@@ -3,7 +3,7 @@ import { Box, Button, TextField } from '@mui/material';
 import { LocalizationProvider, DatePicker, TimePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import type { EventFormState } from '../../types/event';
-import LocationPicker from '../LocationPicker';
+import LocationSection from './LocationSection';
 
 interface Props {
   /** Pre-populate fields (edit mode). Defaults to empty strings / null. */
@@ -68,7 +68,7 @@ export default function EventForm({ initialValues, submitLabel, onSubmit, onDele
           slotProps={{ textField: { fullWidth: true } }}
         />
 
-        <LocationPicker
+        <LocationSection
           value={form.location}
           onChange={(location) => setForm((previous) => ({ ...previous, location }))}
         />
