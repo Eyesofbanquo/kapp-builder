@@ -18,7 +18,7 @@ function DevClassRepositoryProvider({ children }: { children: ReactNode }) {
 
   const addClass = (eventId: string, formState: ClassFormState): string => {
     const id = crypto.randomUUID();
-    const newClass: PilatesClass = { ...formState, id, eventId };
+    const newClass: PilatesClass = { ...formState, id, eventId, createdAt: Date.now() };
     setClasses((previous) => [...previous, newClass]);
     return id;
   };
@@ -65,6 +65,7 @@ function FirestoreClassRepositoryProvider({ children }: { children: ReactNode })
             description: data.description as string,
             rating: data.rating != null ? (data.rating as number) : null,
             notes: (data.notes as string) ?? '',
+            createdAt: (data.createdAt as number) ?? 0,
           };
         });
         setClasses(loaded);
@@ -89,6 +90,7 @@ function FirestoreClassRepositoryProvider({ children }: { children: ReactNode })
         description: formState.description,
         rating: formState.rating,
         notes: formState.notes,
+        createdAt: Date.now(),
       });
     }
 

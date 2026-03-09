@@ -14,6 +14,11 @@ interface Props {
 export default function ClassCard({ pilatesClass, onClick }: Props) {
   const isAttached = pilatesClass.eventId.length > 0;
   const hasNotes = pilatesClass.notes.trim().length > 0;
+  const formattedDate = new Date(pilatesClass.createdAt).toLocaleDateString(undefined, {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  });
 
   return (
     <Paper
@@ -43,15 +48,20 @@ export default function ClassCard({ pilatesClass, onClick }: Props) {
         </Typography>
       )}
 
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 0.5, mt: 1 }}>
-        {isAttached ? (
-          <PushPinIcon fontSize="small" sx={{ color: 'text.secondary' }} />
-        ) : (
-          <LinkOffIcon fontSize="small" sx={{ color: 'text.disabled' }} />
-        )}
-        {hasNotes && (
-          <NoteIcon fontSize="small" sx={{ color: 'text.secondary' }} />
-        )}
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 1 }}>
+        <Typography variant="caption" color="text.disabled">
+          {formattedDate}
+        </Typography>
+        <Box sx={{ display: 'flex', gap: 0.5 }}>
+          {isAttached ? (
+            <PushPinIcon fontSize="small" sx={{ color: 'text.secondary' }} />
+          ) : (
+            <LinkOffIcon fontSize="small" sx={{ color: 'text.disabled' }} />
+          )}
+          {hasNotes && (
+            <NoteIcon fontSize="small" sx={{ color: 'text.secondary' }} />
+          )}
+        </Box>
       </Box>
     </Paper>
   );

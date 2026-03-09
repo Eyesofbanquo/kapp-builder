@@ -8,6 +8,8 @@ export interface PilatesClass {
   rating: number | null;
   /** Markdown text */
   notes: string;
+  /** Unix timestamp (ms) when the class was created */
+  createdAt: number;
 }
 
 export interface ClassFormState {
