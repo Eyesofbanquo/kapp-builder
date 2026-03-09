@@ -8,10 +8,10 @@ import LocationSelectedDisplay from './LocationSelectedDisplay';
 type LocationMode = 'buttons' | 'savedPicker' | 'addNew' | 'selected';
 
 interface Props {
-  /** Currently selected location on the form */
-  value: SelectedLocation | null;
-  /** Called when the user confirms a location selection or clears it */
-  onChange: (location: SelectedLocation | null) => void;
+  /** ID of the currently selected saved location */
+  value: string | null;
+  /** Called with a locationId when confirmed, or null when cleared */
+  onChange: (locationId: string | null) => void;
 }
 
 export default function LocationSection({ onChange }: Props) {
@@ -22,7 +22,7 @@ export default function LocationSection({ onChange }: Props) {
     return (
       <SavedLocationsPicker
         onSelect={(location) => {
-          onChange(location);
+          onChange(location.id);
           setSelectedLocation(location);
           setMode('selected');
         }}
@@ -35,7 +35,7 @@ export default function LocationSection({ onChange }: Props) {
     return (
       <AddNewLocationStack
         onChange={(location) => {
-          onChange(location);
+          onChange(location.id);
           setSelectedLocation(location);
         }}
         onDone={() => setMode('selected')}

@@ -5,6 +5,7 @@ import type { SelectedLocation } from '../types/event';
 interface SavedLocationsContextValue {
   savedLocations: SelectedLocation[];
   addSavedLocation: (location: SelectedLocation) => void;
+  updateSavedLocation: (id: string, updated: SelectedLocation) => void;
 }
 
 const SavedLocationsContext = createContext<SavedLocationsContextValue | null>(null);
@@ -15,11 +16,18 @@ function DevSavedLocationsProvider({ children }: { children: ReactNode }) {
   const [savedLocations, setSavedLocations] = useState<SelectedLocation[]>([]);
 
   const addSavedLocation = (location: SelectedLocation) => {
-    setSavedLocations((previous) => [...previous, location]);
+    const withId: SelectedLocation = { ...location, id: location.id || crypto.randomUUID() };
+    setSavedLocations((previous) => [...previous, withId]);
+  };
+
+  const updateSavedLocation = (id: string, updated: SelectedLocation) => {
+    setSavedLocations((previous) =>
+      previous.map((location) => (location.id === id ? { ...updated, id } : location))
+    );
   };
 
   return (
-    <SavedLocationsContext.Provider value={{ savedLocations, addSavedLocation }}>
+    <SavedLocationsContext.Provider value={{ savedLocations, addSavedLocation, updateSavedLocation }}>
       {children}
     </SavedLocationsContext.Provider>
   );
@@ -40,6 +48,7 @@ function FirestoreSavedLocationsProvider({ children }: { children: ReactNode }) 
         const loaded: SelectedLocation[] = snapshot.docs.map((document) => {
           const data = document.data();
           return {
+            id: (data.id as string) ?? document.id,
             name: data.name as string,
             address: data.address as string,
             lat: data.lat as number,
@@ -55,19 +64,38 @@ function FirestoreSavedLocationsProvider({ children }: { children: ReactNode }) 
   }, []);
 
   const addSavedLocation = (location: SelectedLocation) => {
+    const withId: SelectedLocation = { ...location, id: location.id || crypto.randomUUID() };
+
     async function persist() {
       const { db } = await import('../firebase/config');
       const { SAVED_LOCATIONS_COLLECTION } = await import('../firebase/collectionNames');
       const { collection, addDoc } = await import('firebase/firestore');
 
-      await addDoc(collection(db, SAVED_LOCATIONS_COLLECTION), location);
+      await addDoc(collection(db, SAVED_LOCATIONS_COLLECTION), withId);
+    }
+
+    persist();
+  };
+
+  const updateSavedLocation = (id: string, updated: SelectedLocation) => {
+    async function persist() {
+      const { db } = await import('../firebase/config');
+      const { SAVED_LOCATIONS_COLLECTION } = await import('../firebase/collectionNames');
+      const { collection, query, where, getDocs, updateDoc } = await import('firebase/firestore');
+
+      const snapshot = await getDocs(
+        query(collection(db, SAVED_LOCATIONS_COLLECTION), where('id', '==', id))
+      );
+      for (const document of snapshot.docs) {
+        await updateDoc(document.ref, { ...updated, id });
+      }
     }
 
     persist();
   };
 
   return (
-    <SavedLocationsContext.Provider value={{ savedLocations, addSavedLocation }}>
+    <SavedLocationsContext.Provider value={{ savedLocations, addSavedLocation, updateSavedLocation }}>
       {children}
     </SavedLocationsContext.Provider>
   );

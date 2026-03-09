@@ -8,9 +8,11 @@ interface Props {
   location: SelectedLocation;
   /** Called when the user wants to pick a different location */
   onChangeLocation: () => void;
+  /** Label for the change button. Defaults to "Change Location" */
+  changeLocationLabel?: string;
 }
 
-export default function LocationSelectedDisplay({ location, onChangeLocation }: Props) {
+export default function LocationSelectedDisplay({ location, onChangeLocation, changeLocationLabel = 'Change Location' }: Props) {
   const [toastOpen, setToastOpen] = useState(false);
 
   const handleCopy = () => {
@@ -30,7 +32,7 @@ export default function LocationSelectedDisplay({ location, onChangeLocation }: 
         </IconButton>
       </Box>
       <Button variant="outlined" fullWidth onClick={onChangeLocation}>
-        Change Location
+        {changeLocationLabel}
       </Button>
       <Snackbar
         open={toastOpen}

@@ -1,6 +1,8 @@
 import type { Dayjs } from 'dayjs';
 
 export interface SelectedLocation {
+  /** Unique identifier for this saved location */
+  id: string;
   /** Place display name, e.g. "Central Park" */
   name: string;
   /** Formatted address string */
@@ -14,7 +16,8 @@ export interface EventFormState {
   description: string;
   date: Dayjs | null;
   time: Dayjs | null;
-  location: SelectedLocation | null;
+  /** ID of a saved location, or null if none selected */
+  locationId: string | null;
 }
 
 export interface Event extends EventFormState {

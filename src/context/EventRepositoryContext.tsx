@@ -22,7 +22,7 @@ const MOCK_EVENTS: Event[] = [
     description: 'An intro workshop on seasonal gardening techniques.',
     date: dayjs('2025-03-15'),
     time: dayjs().hour(15).minute(0),
-    location: null,
+    locationId: null,
   },
   {
     id: '2',
@@ -30,7 +30,7 @@ const MOCK_EVENTS: Event[] = [
     description: 'Monthly 5K run through Riverside Park.',
     date: dayjs('2025-03-22'),
     time: dayjs().hour(8).minute(30),
-    location: null,
+    locationId: null,
   },
   {
     id: '3',
@@ -38,7 +38,7 @@ const MOCK_EVENTS: Event[] = [
     description: 'Opening night for the spring collection at the downtown gallery.',
     date: dayjs('2025-04-05'),
     time: dayjs().hour(18).minute(0),
-    location: null,
+    locationId: null,
   },
 ];
 
@@ -96,7 +96,7 @@ function FirestoreEventRepositoryProvider({ children }: { children: ReactNode })
             description: data.description as string,
             date: data.date ? dayjs(data.date as string) : null,
             time: data.time ? dayjs(data.time as string) : null,
-            location: data.location ?? null,
+            locationId: (data.locationId as string) ?? null,
           };
         });
         setEvents(loaded);
@@ -120,7 +120,7 @@ function FirestoreEventRepositoryProvider({ children }: { children: ReactNode })
         description: formState.description,
         date: formState.date?.toISOString() ?? null,
         time: formState.time?.toISOString() ?? null,
-        location: formState.location ?? null,
+        locationId: formState.locationId ?? null,
       });
     }
 
@@ -140,7 +140,7 @@ function FirestoreEventRepositoryProvider({ children }: { children: ReactNode })
         description: formState.description,
         date: formState.date?.toISOString() ?? null,
         time: formState.time?.toISOString() ?? null,
-        location: formState.location ?? null,
+        locationId: formState.locationId ?? null,
       });
     }
 

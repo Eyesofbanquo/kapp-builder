@@ -82,6 +82,7 @@ export default function LocationPicker({ value, onChange }: Props) {
       await place.fetchFields({ fields: ['location', 'formattedAddress', 'displayName'] });
       if (place.location) {
         onChange({
+          id: crypto.randomUUID(),
           name: place.displayName ?? pred.mainText?.text ?? '',
           address: place.formattedAddress ?? pred.text.text,
           lat: place.location.lat(),
