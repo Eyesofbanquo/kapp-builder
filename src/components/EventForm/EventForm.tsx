@@ -1,13 +1,16 @@
 import { useState } from 'react';
-import { Box, Button, TextField } from '@mui/material';
+import { Box, Button, Divider, TextField } from '@mui/material';
 import { LocalizationProvider, DatePicker, TimePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import type { EventFormState } from '../../types/event';
 import LocationSection from './LocationSection';
+import ClassSection from './ClassSection';
 
 interface Props {
   /** Pre-populate fields (edit mode). Defaults to empty strings / null. */
   initialValues?: EventFormState;
+  /** When provided (edit mode), renders the ClassSection for this event */
+  eventId?: string;
   /** Label for the primary action button */
   submitLabel: string;
   /** Called when user submits the form */
@@ -24,7 +27,7 @@ const EMPTY_FORM: EventFormState = {
   locationId: null,
 };
 
-export default function EventForm({ initialValues, submitLabel, onSubmit, onDelete }: Props) {
+export default function EventForm({ initialValues, eventId, submitLabel, onSubmit, onDelete }: Props) {
   const [form, setForm] = useState<EventFormState>(initialValues ?? EMPTY_FORM);
 
   const isValid = form.title.trim() && form.date && form.time && form.locationId;
@@ -93,6 +96,13 @@ export default function EventForm({ initialValues, submitLabel, onSubmit, onDele
           >
             Delete Event
           </Button>
+        )}
+
+        {eventId && (
+          <>
+            <Divider />
+            <ClassSection eventId={eventId} />
+          </>
         )}
       </Box>
     </LocalizationProvider>

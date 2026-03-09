@@ -33,6 +33,7 @@ export default function EditEventDialog({ event, onClose }: Props) {
         {event && (
           <EventForm
             initialValues={event}
+            eventId={event.id}
             submitLabel="Edit Event"
             onSubmit={handleUpdate}
             onDelete={handleDelete}

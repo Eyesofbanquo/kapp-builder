@@ -2,27 +2,40 @@ import { createContext, useContext, useState } from 'react';
 import type { ReactNode } from 'react';
 import type { Screen } from '../types/navigation';
 
+interface ScreenEntry {
+  screen: Screen;
+  params?: Record<string, string>;
+}
+
 interface NavigationContextValue {
-  push: (screen: Screen) => void;
+  push: (screen: Screen, params?: Record<string, string>) => void;
   pop: () => void;
-  replaceWith: (screen: Screen) => void;
+  replaceWith: (screen: Screen, params?: Record<string, string>) => void;
   canGoBack: boolean;
   currentScreen: Screen;
+  currentParams: Record<string, string> | undefined;
 }
 
 const NavigationContext = createContext<NavigationContextValue | null>(null);
 
 export function NavigationProvider({ children }: { children: ReactNode }) {
-  const [stack, setStack] = useState<Screen[]>(['main']);
+  const [stack, setStack] = useState<ScreenEntry[]>([{ screen: 'main' }]);
 
-  const push = (screen: Screen) => setStack((s) => [...s, screen]);
+  const push = (screen: Screen, params?: Record<string, string>) =>
+    setStack((s) => [...s, { screen, params }]);
+
   const pop = () => setStack((s) => s.slice(0, -1));
-  const replaceWith = (screen: Screen) => setStack((s) => [...s.slice(0, -1), screen]);
+
+  const replaceWith = (screen: Screen, params?: Record<string, string>) =>
+    setStack((s) => [...s.slice(0, -1), { screen, params }]);
+
   const canGoBack = stack.length > 1;
-  const currentScreen = stack[stack.length - 1];
+  const current = stack[stack.length - 1];
+  const currentScreen = current.screen;
+  const currentParams = current.params;
 
   return (
-    <NavigationContext.Provider value={{ push, pop, replaceWith, canGoBack, currentScreen }}>
+    <NavigationContext.Provider value={{ push, pop, replaceWith, canGoBack, currentScreen, currentParams }}>
       {children}
     </NavigationContext.Provider>
   );
