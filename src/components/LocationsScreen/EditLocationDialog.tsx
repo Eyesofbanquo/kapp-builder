@@ -16,7 +16,7 @@ interface Props {
 
 export default function EditLocationDialog({ location, onClose }: Props) {
   const [mode, setMode] = useState<EditMode>('selected');
-  const { updateSavedLocation } = useSavedLocations();
+  const { updateSavedLocation, deleteSavedLocation } = useSavedLocations();
 
   const handleDialogClose = () => {
     setMode('selected');
@@ -33,7 +33,11 @@ export default function EditLocationDialog({ location, onClose }: Props) {
           <LocationSelectedDisplay
             location={location}
             onChangeLocation={() => setMode('addNew')}
-            changeLocationLabel="Clear Location"
+            changeLocationLabel="Update"
+            onDelete={() => {
+              deleteSavedLocation(location.id);
+              handleDialogClose();
+            }}
           />
         )}
         {mode === 'addNew' && (

@@ -6,6 +6,7 @@ interface SavedLocationsContextValue {
   savedLocations: SelectedLocation[];
   addSavedLocation: (location: SelectedLocation) => void;
   updateSavedLocation: (id: string, updated: SelectedLocation) => void;
+  deleteSavedLocation: (id: string) => void;
 }
 
 const SavedLocationsContext = createContext<SavedLocationsContextValue | null>(null);
@@ -26,8 +27,12 @@ function DevSavedLocationsProvider({ children }: { children: ReactNode }) {
     );
   };
 
+  const deleteSavedLocation = (id: string) => {
+    setSavedLocations((previous) => previous.filter((location) => location.id !== id));
+  };
+
   return (
-    <SavedLocationsContext.Provider value={{ savedLocations, addSavedLocation, updateSavedLocation }}>
+    <SavedLocationsContext.Provider value={{ savedLocations, addSavedLocation, updateSavedLocation, deleteSavedLocation }}>
       {children}
     </SavedLocationsContext.Provider>
   );
@@ -94,8 +99,25 @@ function FirestoreSavedLocationsProvider({ children }: { children: ReactNode }) 
     persist();
   };
 
+  const deleteSavedLocation = (id: string) => {
+    async function persist() {
+      const { db } = await import('../firebase/config');
+      const { SAVED_LOCATIONS_COLLECTION } = await import('../firebase/collectionNames');
+      const { collection, query, where, getDocs, deleteDoc } = await import('firebase/firestore');
+
+      const snapshot = await getDocs(
+        query(collection(db, SAVED_LOCATIONS_COLLECTION), where('id', '==', id))
+      );
+      for (const document of snapshot.docs) {
+        await deleteDoc(document.ref);
+      }
+    }
+
+    persist();
+  };
+
   return (
-    <SavedLocationsContext.Provider value={{ savedLocations, addSavedLocation, updateSavedLocation }}>
+    <SavedLocationsContext.Provider value={{ savedLocations, addSavedLocation, updateSavedLocation, deleteSavedLocation }}>
       {children}
     </SavedLocationsContext.Provider>
   );
