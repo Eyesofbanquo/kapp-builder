@@ -1,9 +1,12 @@
 import type { Dayjs } from 'dayjs';
 
 export interface SelectedLocation {
+  /** Place display name, e.g. "Central Park" */
+  name: string;
+  /** Formatted address string */
+  address: string;
   lat: number;
   lng: number;
-  address: string;
 }
 
 export interface EventFormState {

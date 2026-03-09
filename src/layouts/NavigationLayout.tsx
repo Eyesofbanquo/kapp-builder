@@ -4,6 +4,7 @@ import { useNavigation } from '../context/NavigationContext';
 import MainScreen from '../screens/MainScreen';
 import CreateEventScreen from '../screens/CreateEventScreen';
 import AllEventsScreen from '../screens/AllEventsScreen';
+import LocationsScreen from '../screens/LocationsScreen';
 
 export default function NavigationLayout() {
   const { canGoBack, pop, currentScreen } = useNavigation();
@@ -11,6 +12,7 @@ export default function NavigationLayout() {
   const renderScreen = () => {
     if (currentScreen === 'createEvent') return <CreateEventScreen />;
     if (currentScreen === 'allEvents') return <AllEventsScreen />;
+    if (currentScreen === 'locations') return <LocationsScreen />;
     return <MainScreen />;
   };
 
