@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Divider, Typography } from '@mui/material';
 import type { SelectedLocation } from '../../types/event';
 import { useSavedLocations } from '../../context/SavedLocationsContext';
 
@@ -13,23 +13,26 @@ export default function SavedLocationsPicker({ onSelect, onCancel }: Props) {
   const { savedLocations } = useSavedLocations();
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
       {savedLocations.map((location, index) => (
-        <Button
-          key={index}
-          fullWidth
-          variant="text"
-          onClick={() => onSelect(location)}
-          sx={{ justifyContent: 'flex-start', textAlign: 'left' }}
-        >
-          <Box sx={{ textAlign: 'left' }}>
-            <Typography variant="body1">{location.name}</Typography>
-            <Typography variant="body2" color="text.secondary">
-              {location.name !== location.address ? location.address : ''}
-            </Typography>
-          </Box>
-        </Button>
+        <Box key={index}>
+          {index > 0 && <Divider />}
+          <Button
+            fullWidth
+            variant="text"
+            onClick={() => onSelect(location)}
+            sx={{ justifyContent: 'flex-start', textAlign: 'left', py: 1.5 }}
+          >
+            <Box sx={{ textAlign: 'left' }}>
+              <Typography variant="body1">{location.name}</Typography>
+              <Typography variant="body2" color="text.secondary">
+                {location.name !== location.address ? location.address : ''}
+              </Typography>
+            </Box>
+          </Button>
+        </Box>
       ))}
+      <Divider sx={{ mb: 1 }} />
       <Button fullWidth variant="outlined" color="error" onClick={onCancel}>
         Cancel
       </Button>
