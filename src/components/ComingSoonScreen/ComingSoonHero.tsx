@@ -38,25 +38,57 @@ export default function ComingSoonHero() {
           }}
         >
           <motion.div
-            animate={{ y: [0, -10, 0], rotate: [0, -1.5, 0, 1.5, 0] }}
-            transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+            initial={{
+              opacity: 0,
+              scale: 0.3,
+              x: 24,
+              y: 180,
+              rotate: -18,
+              filter: 'blur(10px)',
+            }}
+            animate={{
+              opacity: 1,
+              scale: 1,
+              x: 0,
+              y: 0,
+              rotate: 0,
+              filter: 'blur(0px)',
+            }}
+            transition={{
+              type: 'spring',
+              stiffness: 120,
+              damping: 11,
+              mass: 0.82,
+              velocity: 7,
+              delay: 0.08,
+            }}
           >
-            <Box
-              sx={{
-                display: 'inline-flex',
-                p: { xs: 2, sm: 2.5 },
-                width: 'clamp(150px, 42vw, 240px)',
-                borderRadius: { xs: '24px', sm: '28px' },
-                background: 'radial-gradient(circle, rgba(233, 128, 252, 0.18) 0%, rgba(221, 255, 247, 0) 72%)',
-                '& svg': {
-                  display: 'block',
-                  width: '100%',
-                  height: 'auto',
-                },
+            <motion.div
+              animate={{ y: [0, -10, 0], rotate: [0, -1.5, 0, 1.5, 0] }}
+              transition={{
+                duration: 6,
+                repeat: Infinity,
+                ease: 'easeInOut',
+                delay: 1.1,
               }}
             >
-              <CloverKLogo size={220} color={publicAppPalette.plum} strokeWidth={10} />
-            </Box>
+              <Box
+                sx={{
+                  display: 'inline-flex',
+                  p: { xs: 2, sm: 2.5 },
+                  width: 'clamp(150px, 42vw, 240px)',
+                  borderRadius: { xs: '24px', sm: '28px' },
+                  background: 'radial-gradient(circle, rgba(233, 128, 252, 0.18) 0%, rgba(221, 255, 247, 0) 72%)',
+                  '& svg': {
+                    display: 'block',
+                    width: '100%',
+                    height: 'auto',
+                  },
+                }}
+              >
+                <CloverKLogo size={220} color={publicAppPalette.plum} strokeWidth={10} />
+              </Box>
+            </motion.div>
           </motion.div>
           <Typography
             variant="h2"
