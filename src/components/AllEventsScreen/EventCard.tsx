@@ -2,6 +2,7 @@ import { Box, Card, CardActionArea, Typography } from '@mui/material';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import PlaceIcon from '@mui/icons-material/Place';
+import SchoolIcon from '@mui/icons-material/School';
 import { motion, type Variants } from 'framer-motion';
 import type { Event } from '../../types/event';
 import { useSavedLocations } from '../../context/SavedLocationsContext';
@@ -15,6 +16,8 @@ interface Props {
   isNew?: boolean;
   /** Called after the rattle animation finishes */
   onAnimationComplete?: () => void;
+  /** When true, shows a school icon indicating a class is attached */
+  hasClass?: boolean;
 }
 
 const rattleVariants: Variants = {
@@ -24,7 +27,7 @@ const rattleVariants: Variants = {
   },
 };
 
-export default function EventCard({ event, onClick, isNew, onAnimationComplete }: Props) {
+export default function EventCard({ event, onClick, isNew, onAnimationComplete, hasClass }: Props) {
   const { savedLocations } = useSavedLocations();
   const location = event.locationId
     ? savedLocations.find((saved) => saved.id === event.locationId)
@@ -55,10 +58,15 @@ export default function EventCard({ event, onClick, isNew, onAnimationComplete }
               <AccessTimeIcon fontSize="small" color="action" />
               <Typography variant="body2">{formattedTime}</Typography>
             </Box>
-            {location && (
-              <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 0.5 }}>
-                <PlaceIcon fontSize="small" color="action" />
-                <Typography variant="body2" color="text.secondary">{location.name}</Typography>
+            {(location || hasClass) && (
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 0.5 }}>
+                {location ? (
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                    <PlaceIcon fontSize="small" color="action" />
+                    <Typography variant="body2" color="text.secondary">{location.name}</Typography>
+                  </Box>
+                ) : <Box />}
+                {hasClass && <SchoolIcon fontSize="small" color="action" />}
               </Box>
             )}
           </Box>

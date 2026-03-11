@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { Box, Container, IconButton, TextField, Typography } from '@mui/material';
+import { Box, Container, IconButton, TextField } from '@mui/material';
 import SwapVertIcon from '@mui/icons-material/SwapVert';
 import { useEventRepository } from '../context/EventRepositoryContext';
+import { useClassRepository } from '../context/ClassRepositoryContext';
 import ToolSection from '../components/MainScreen/ToolSection';
 import EventCard from '../components/AllEventsScreen/EventCard';
 import EditEventDialog from '../components/AllEventsScreen/EditEventDialog';
@@ -15,6 +16,7 @@ type SortOrder = 'asc' | 'desc';
 
 export default function AllEventsScreen(_props: Props) {
   const { events, lastCreatedEventId, clearLastCreatedEventId } = useEventRepository();
+  const { classes } = useClassRepository();
   const [searchQuery, setSearchQuery] = useState('');
   const [sortOrder, setSortOrder] = useState<SortOrder>('desc');
   const [editingEvent, setEditingEvent] = useState<Event | null>(null);
@@ -43,12 +45,8 @@ export default function AllEventsScreen(_props: Props) {
   };
 
   return (
-    <Box sx={{ minHeight: '100vh', backgroundColor: '#f5f5f5', py: 6 }}>
+    <Box sx={{ minHeight: '100vh', backgroundColor: '#f5f5f5', pt: 2, pb: 6 }}>
       <Container maxWidth="sm">
-        <Typography variant="h5" fontWeight={700} mb={3}>
-          Events
-        </Typography>
-
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
           <TextField
             placeholder="Search events..."
@@ -72,6 +70,7 @@ export default function AllEventsScreen(_props: Props) {
                   onClick={setEditingEvent}
                   isNew={event.id === lastCreatedEventId}
                   onAnimationComplete={event.id === lastCreatedEventId ? clearLastCreatedEventId : undefined}
+                  hasClass={classes.some((pilatesClass) => pilatesClass.eventId === event.id)}
                 />
               ))}
             </ToolSection>

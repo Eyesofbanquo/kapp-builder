@@ -39,6 +39,13 @@ export default function EventForm({ initialValues, eventId, submitLabel, onSubmi
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+        {eventId && (
+          <>
+            <ClassSection eventId={eventId} />
+            <Divider />
+          </>
+        )}
+
         <TextField
           label="Title"
           placeholder="Event name"
@@ -98,12 +105,6 @@ export default function EventForm({ initialValues, eventId, submitLabel, onSubmi
           </Button>
         )}
 
-        {eventId && (
-          <>
-            <Divider />
-            <ClassSection eventId={eventId} />
-          </>
-        )}
       </Box>
     </LocalizationProvider>
   );

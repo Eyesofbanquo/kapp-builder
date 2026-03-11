@@ -1,14 +1,6 @@
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  List,
-  ListItemButton,
-  ListItemText,
-  Typography,
-} from '@mui/material';
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Paper, Typography } from '@mui/material';
+import StarIcon from '@mui/icons-material/Star';
+import SubjectIcon from '@mui/icons-material/Subject';
 import { useClassRepository } from '../../context/ClassRepositoryContext';
 import type { PilatesClass } from '../../types/class';
 
@@ -40,25 +32,54 @@ export default function ChangeClassDialog({ eventId, currentClassId, open, onClo
   };
 
   return (
-    <Dialog open={open} onClose={onClose} maxWidth="xs" fullWidth>
+    <Dialog open={open} onClose={onClose} scroll="paper" maxWidth="xs" fullWidth>
       <DialogTitle>Select a class</DialogTitle>
-      <DialogContent>
-        {classes.length === 0 ? (
-          <Typography variant="body2" color="text.secondary">
-            No classes available.
-          </Typography>
-        ) : (
-          <List disablePadding>
-            {classes.map((pilatesClass) => (
-              <ListItemButton key={pilatesClass.id} onClick={() => handleSelect(pilatesClass)}>
-                <ListItemText
-                  primary={pilatesClass.name}
-                  secondary={pilatesClass.description || undefined}
-                />
-              </ListItemButton>
-            ))}
-          </List>
-        )}
+      <DialogContent dividers>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+          {classes.map((pilatesClass) => (
+            <Paper
+              key={pilatesClass.id}
+              elevation={0}
+              onClick={() => handleSelect(pilatesClass)}
+              sx={{
+                p: 2,
+                borderRadius: 2,
+                border: '1px solid',
+                borderColor: 'divider',
+                cursor: 'pointer',
+                '&:hover': { backgroundColor: 'action.hover' },
+              }}
+            >
+              <Typography variant="subtitle2" fontWeight={600}>
+                {pilatesClass.name}
+              </Typography>
+
+              {pilatesClass.rating !== null && (
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, mt: 0.5 }}>
+                  <StarIcon fontSize="small" sx={{ color: 'text.secondary', fontSize: 14 }} />
+                  <Typography variant="body2" color="text.secondary">
+                    {pilatesClass.rating} / 5
+                  </Typography>
+                </Box>
+              )}
+
+              {pilatesClass.description && (
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, mt: 0.5 }}>
+                  <SubjectIcon fontSize="small" sx={{ color: 'text.secondary', fontSize: 14 }} />
+                  <Typography variant="body2" color="text.secondary">
+                    {pilatesClass.description}
+                  </Typography>
+                </Box>
+              )}
+            </Paper>
+          ))}
+
+          {classes.length === 0 && (
+            <Typography variant="body2" color="text.secondary" sx={{ textAlign: 'center', py: 4 }}>
+              No classes available.
+            </Typography>
+          )}
+        </Box>
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>Cancel</Button>

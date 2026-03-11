@@ -48,12 +48,8 @@ export default function AllClassesScreen(_props: Props) {
   const sorted = sortClasses(filtered, sortOption);
 
   return (
-    <Box sx={{ minHeight: '100vh', backgroundColor: '#f5f5f5', py: 6 }}>
+    <Box sx={{ minHeight: '100vh', backgroundColor: '#f5f5f5', pt: 2, pb: 6 }}>
       <Container maxWidth="sm">
-        <Typography variant="h5" fontWeight={700} mb={4}>
-          Classes
-        </Typography>
-
         <Box sx={{ display: 'flex', gap: 1, mb: 3 }}>
           <TextField
             placeholder="Search classes…"
