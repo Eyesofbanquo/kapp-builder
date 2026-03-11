@@ -19,16 +19,24 @@ interface Props {
 
 export default function AddNewLocationStack({ onChange, onDone, onCancel, saveLabel = 'Save New Location', onSave }: Props) {
   const [pickedLocation, setPickedLocation] = useState<SelectedLocation | null>(null);
-  const { addSavedLocation } = useSavedLocations();
+  const { addSavedLocation, savedLocations } = useSavedLocations();
 
   const handleSave = () => {
     if (!pickedLocation) return;
     if (onSave) {
       onSave(pickedLocation);
     } else {
-      addSavedLocation(pickedLocation);
-      onChange(pickedLocation);
-      onDone();
+      const existing = savedLocations.find(
+        (location) => location.lat === pickedLocation.lat && location.lng === pickedLocation.lng
+      );
+      if (existing) {
+        onChange(existing);
+        onDone();
+      } else {
+        addSavedLocation(pickedLocation);
+        onChange(pickedLocation);
+        onDone();
+      }
     }
   };
 
