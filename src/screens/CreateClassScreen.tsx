@@ -4,11 +4,14 @@ import { useClassRepository } from '../context/ClassRepositoryContext';
 import { useNavigation } from '../context/NavigationContext';
 import type { ClassFormState } from '../types/class';
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface Props {
   // eventId comes from currentParams
 }
 
-export default function CreateClassScreen(_props: Props) {
+export default function CreateClassScreen(props: Props) {
+  void props;
+
   const { addClass } = useClassRepository();
   const { replaceWith, currentParams } = useNavigation();
 

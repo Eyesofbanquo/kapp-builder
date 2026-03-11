@@ -12,3 +12,8 @@
 
 [context.deploy-preview.environment]
   VITE_APP_ENV = "staging"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

@@ -5,11 +5,14 @@ import AddClassDialog from '../components/CreateEventScreen/AddClassDialog';
 import { useEventRepository } from '../context/EventRepositoryContext';
 import type { EventFormState } from '../types/event';
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface Props {
   // No external props needed; data and navigation come from context
 }
 
-export default function CreateEventScreen(_props: Props) {
+export default function CreateEventScreen(props: Props) {
+  void props;
+
   const { addEvent } = useEventRepository();
   const [newEventId, setNewEventId] = useState<string | null>(null);
 
