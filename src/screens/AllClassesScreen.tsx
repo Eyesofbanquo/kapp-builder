@@ -17,11 +17,6 @@ import type { SelectChangeEvent } from '@mui/material';
 
 type SortOption = 'date-desc' | 'date-asc' | 'name-asc' | 'rating-desc';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface Props {
-  // No props needed; data comes from ClassRepositoryContext
-}
-
 function sortClasses(classes: PilatesClass[], sort: SortOption): PilatesClass[] {
   return [...classes].sort((firstClass, secondClass) => {
     if (sort === 'date-desc') return secondClass.createdAt - firstClass.createdAt;
@@ -32,9 +27,7 @@ function sortClasses(classes: PilatesClass[], sort: SortOption): PilatesClass[] 
   });
 }
 
-export default function AllClassesScreen(props: Props) {
-  void props;
-
+export default function AllClassesScreen() {
   const { classes } = useClassRepository();
   const [editingClass, setEditingClass] = useState<PilatesClass | null>(null);
   const [searchQuery, setSearchQuery] = useState('');

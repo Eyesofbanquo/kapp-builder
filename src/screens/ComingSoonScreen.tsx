@@ -1,12 +1,7 @@
 import { Box } from '@mui/material';
 import ComingSoonHero from '../components/ComingSoonScreen/ComingSoonHero';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface Props {}
-
-export default function ComingSoonScreen(props: Props) {
-  void props;
-
+export default function ComingSoonScreen() {
   return (
     <Box
       sx={{
@@ -14,6 +9,8 @@ export default function ComingSoonScreen(props: Props) {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+        width: '100%',
+        py: { xs: 2, sm: 3 },
       }}
     >
       <ComingSoonHero />

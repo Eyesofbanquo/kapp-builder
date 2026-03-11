@@ -8,16 +8,9 @@ import EventCard from '../components/AllEventsScreen/EventCard';
 import EditEventDialog from '../components/AllEventsScreen/EditEventDialog';
 import type { Event } from '../types/event';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface Props {
-  // No props needed; data comes from EventRepositoryContext
-}
-
 type SortOrder = 'asc' | 'desc';
 
-export default function AllEventsScreen(props: Props) {
-  void props;
-
+export default function AllEventsScreen() {
   const { events, lastCreatedEventId, clearLastCreatedEventId } = useEventRepository();
   const { classes } = useClassRepository();
   const [searchQuery, setSearchQuery] = useState('');

@@ -2,12 +2,7 @@ import { Box, Button, Typography } from '@mui/material';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import { publicAppPalette } from '../theme/publicAppTheme';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface Props {}
-
-export default function NotFoundScreen(props: Props) {
-  void props;
-
+export default function NotFoundScreen() {
   const location = useLocation();
 
   return (

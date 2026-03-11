@@ -4,12 +4,7 @@ import NotFoundScreen from '../screens/NotFoundScreen';
 import BackendAppLayout from './BackendAppLayout';
 import PublicAppLayout from './PublicAppLayout';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface Props {}
-
-export default function AppRouterLayout(props: Props) {
-  void props;
-
+export default function AppRouterLayout() {
   return (
     <BrowserRouter>
       <Routes>

@@ -4,19 +4,14 @@ import { ThemeProvider } from '@mui/material/styles';
 import { Outlet } from 'react-router-dom';
 import { publicAppPalette, publicAppTheme } from '../theme/publicAppTheme';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface Props {}
-
-export default function PublicAppLayout(props: Props) {
-  void props;
-
+export default function PublicAppLayout() {
   return (
     <ThemeProvider theme={publicAppTheme}>
       <CssBaseline />
       <Box
         sx={{
           position: 'relative',
-          minHeight: '100vh',
+          minHeight: '100dvh',
           overflow: 'hidden',
           background: `linear-gradient(160deg, ${publicAppPalette.mint} 0%, ${publicAppPalette.blush} 48%, #ffffff 100%)`,
         }}
@@ -55,26 +50,18 @@ export default function PublicAppLayout(props: Props) {
               filter: 'blur(52px)',
             }}
           />
-          <Box
-            sx={{
-              position: 'absolute',
-              inset: '12% 8%',
-              border: '1px solid rgba(35, 27, 27, 0.08)',
-              borderRadius: '32px',
-            }}
-          />
         </Box>
         <Box
           sx={{
             position: 'relative',
             zIndex: 1,
-            minHeight: '100vh',
+            minHeight: '100dvh',
             display: 'flex',
             flexDirection: 'column',
-            paddingTop: 'calc(env(safe-area-inset-top) + 24px)',
-            paddingRight: { xs: '16px', sm: '32px' },
-            paddingBottom: 'calc(env(safe-area-inset-bottom) + 24px)',
-            paddingLeft: { xs: '16px', sm: '32px' },
+            paddingTop: 'calc(env(safe-area-inset-top) + 20px)',
+            paddingRight: { xs: '16px', sm: '24px', md: '32px' },
+            paddingBottom: 'calc(env(safe-area-inset-bottom) + 20px)',
+            paddingLeft: { xs: '16px', sm: '24px', md: '32px' },
           }}
         >
           <Outlet />

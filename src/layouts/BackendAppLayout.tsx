@@ -5,12 +5,7 @@ import { NavigationProvider } from '../context/NavigationContext';
 import { SavedLocationsProvider } from '../context/SavedLocationsContext';
 import NavigationLayout from './NavigationLayout';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface Props {}
-
-export default function BackendAppLayout(props: Props) {
-  void props;
-
+export default function BackendAppLayout() {
   return (
     <Box
       sx={{
