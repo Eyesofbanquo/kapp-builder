@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Box, Container, IconButton, TextField } from '@mui/material';
 import SwapVertIcon from '@mui/icons-material/SwapVert';
 import { useEventRepository } from '../context/EventRepositoryContext';
+import { useClassRepository } from '../context/ClassRepositoryContext';
 import ToolSection from '../components/MainScreen/ToolSection';
 import EventCard from '../components/AllEventsScreen/EventCard';
 import EditEventDialog from '../components/AllEventsScreen/EditEventDialog';
@@ -15,6 +16,7 @@ type SortOrder = 'asc' | 'desc';
 
 export default function AllEventsScreen(_props: Props) {
   const { events, lastCreatedEventId, clearLastCreatedEventId } = useEventRepository();
+  const { classes } = useClassRepository();
   const [searchQuery, setSearchQuery] = useState('');
   const [sortOrder, setSortOrder] = useState<SortOrder>('desc');
   const [editingEvent, setEditingEvent] = useState<Event | null>(null);
@@ -68,6 +70,7 @@ export default function AllEventsScreen(_props: Props) {
                   onClick={setEditingEvent}
                   isNew={event.id === lastCreatedEventId}
                   onAnimationComplete={event.id === lastCreatedEventId ? clearLastCreatedEventId : undefined}
+                  hasClass={classes.some((pilatesClass) => pilatesClass.eventId === event.id)}
                 />
               ))}
             </ToolSection>
