@@ -38,9 +38,15 @@ export default function MainScreen() {
           <ToolSection title="Classes">
             <ToolCard
               grouped
-              comingSoon
-              title="Playlists"
-              description="Coming soon."
+              title="Create a class"
+              description="Record a Pilates class with notes and a rating."
+              onClick={() => push('createClass', {})}
+            />
+            <ToolCard
+              grouped
+              title="All Classes"
+              description="Browse and manage all your logged classes."
+              onClick={() => push('allClasses')}
             />
           </ToolSection>
         </Box>
