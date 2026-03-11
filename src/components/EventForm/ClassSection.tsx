@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { Box, Button, Chip, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from '@mui/material';
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Typography } from '@mui/material';
 import { useClassRepository } from '../../context/ClassRepositoryContext';
 import ChangeClassDialog from './ChangeClassDialog';
+import CompactClassCard from './CompactClassCard';
 
 interface Props {
   /** ID of the event whose associated class is shown */
@@ -17,24 +18,40 @@ export default function ClassSection({ eventId }: Props) {
 
   return (
     <Box>
-      <Typography variant="subtitle2" color="text.secondary" mb={1}>
+      <Typography variant="subtitle2" color="text.secondary" mb={0.5}>
         Class
       </Typography>
+      <Divider sx={{ mb: 1.5 }} />
 
       {attachedClass ? (
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
-          <Chip label={attachedClass.name} />
-          <Button size="small" color="error" onClick={() => setShowDeleteConfirm(true)}>
-            Delete
-          </Button>
-          <Button size="small" onClick={() => setShowChangeDialog(true)}>
-            Change
-          </Button>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+          <CompactClassCard pilatesClass={attachedClass} />
+          <Box sx={{ display: 'flex', gap: 1 }}>
+            <Button
+              size="small"
+              color="error"
+              onClick={() => setShowDeleteConfirm(true)}
+              sx={{ alignSelf: 'flex-start' }}
+            >
+              Delete
+            </Button>
+            <Button
+              size="small"
+              onClick={() => setShowChangeDialog(true)}
+              sx={{ alignSelf: 'flex-start' }}
+            >
+              Change
+            </Button>
+          </Box>
         </Box>
       ) : (
-        <Typography variant="body2" color="text.secondary">
-          No class attached
-        </Typography>
+        <Button
+          variant="outlined"
+          size="small"
+          onClick={() => setShowChangeDialog(true)}
+        >
+          Add class
+        </Button>
       )}
 
       <Dialog open={showDeleteConfirm} onClose={() => setShowDeleteConfirm(false)} maxWidth="xs" fullWidth>
