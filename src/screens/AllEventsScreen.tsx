@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, Container, IconButton, TextField, Typography } from '@mui/material';
+import { Box, Container, IconButton, TextField } from '@mui/material';
 import SwapVertIcon from '@mui/icons-material/SwapVert';
 import { useEventRepository } from '../context/EventRepositoryContext';
 import ToolSection from '../components/MainScreen/ToolSection';
@@ -43,12 +43,8 @@ export default function AllEventsScreen(_props: Props) {
   };
 
   return (
-    <Box sx={{ minHeight: '100vh', backgroundColor: '#f5f5f5', py: 6 }}>
+    <Box sx={{ minHeight: '100vh', backgroundColor: '#f5f5f5', pt: 2, pb: 6 }}>
       <Container maxWidth="sm">
-        <Typography variant="h5" fontWeight={700} mb={3}>
-          Events
-        </Typography>
-
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
           <TextField
             placeholder="Search events..."

@@ -1,4 +1,4 @@
-import { Box, Container, Typography } from '@mui/material';
+import { Box, Container } from '@mui/material';
 import ToolCard from '../components/MainScreen/ToolCard';
 import ToolSection from '../components/MainScreen/ToolSection';
 import { useNavigation } from '../context/NavigationContext';
@@ -7,12 +7,8 @@ export default function MainScreen() {
   const { push } = useNavigation();
 
   return (
-    <Box sx={{ minHeight: '100vh', backgroundColor: '#f5f5f5', py: 6 }}>
+    <Box sx={{ minHeight: '100vh', backgroundColor: '#f5f5f5', pt: 2, pb: 6 }}>
       <Container maxWidth="sm">
-        <Typography variant="h5" fontWeight={700} mb={4}>
-          Home
-        </Typography>
-
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
           <ToolSection title="Events">
             <ToolCard
