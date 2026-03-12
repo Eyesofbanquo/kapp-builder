@@ -1,11 +1,60 @@
 import { Box, Typography } from '@mui/material';
-import { motion } from 'framer-motion';
+import { motion, useAnimationControls } from 'framer-motion';
 import CloverKLogo from '../../assets/CloverKLogo';
 import { publicAppPalette } from '../../theme/publicAppTheme';
 
 const comingSoonTextColor = '#40283F';
 
+function createRandomBounceAnimation() {
+  const horizontalDirection = Math.random() > 0.5 ? 1 : -1;
+  const primaryKick = 20 + Math.random() * 28;
+  const counterKick = 18 + Math.random() * 24;
+  const settleKick = 8 + Math.random() * 14;
+  const verticalLift = 34 + Math.random() * 34;
+  const rotationKick = 10 + Math.random() * 16;
+
+  return {
+    x: [
+      0,
+      horizontalDirection * primaryKick,
+      horizontalDirection * -counterKick,
+      horizontalDirection * settleKick,
+      0,
+    ],
+    y: [
+      0,
+      -verticalLift,
+      -(verticalLift * 0.38),
+      -(verticalLift * 0.72),
+      0,
+    ],
+    rotate: [
+      0,
+      horizontalDirection * rotationKick,
+      horizontalDirection * -(rotationKick * 1.2),
+      horizontalDirection * (rotationKick * 0.52),
+      0,
+    ],
+    scale: [1, 0.9, 1.08, 0.97, 1],
+  };
+}
+
 export default function ComingSoonHero() {
+  const interactionControls = useAnimationControls();
+
+  const handleLogoInteraction = () => {
+    interactionControls.stop();
+
+    void interactionControls.start({
+      ...createRandomBounceAnimation(),
+      transition: {
+        duration: 1.2,
+        times: [0, 0.18, 0.42, 0.74, 1],
+        ease: [0.34, 1.56, 0.64, 1],
+      },
+    });
+  };
+
   return (
     <Box
       sx={{
@@ -72,22 +121,37 @@ export default function ComingSoonHero() {
                 delay: 1.1,
               }}
             >
-              <Box
-                sx={{
+              <motion.button
+                type="button"
+                aria-label="Bounce Clover K logo"
+                onClick={handleLogoInteraction}
+                whileTap={{ scale: 0.88 }}
+                animate={interactionControls}
+                style={{
                   display: 'inline-flex',
-                  p: { xs: 2, sm: 2.5 },
-                  width: 'clamp(150px, 42vw, 240px)',
-                  borderRadius: { xs: '24px', sm: '28px' },
-                  background: 'radial-gradient(circle, rgba(233, 128, 252, 0.18) 0%, rgba(221, 255, 247, 0) 72%)',
-                  '& svg': {
-                    display: 'block',
-                    width: '100%',
-                    height: 'auto',
-                  },
+                  padding: 0,
+                  border: 'none',
+                  background: 'transparent',
+                  cursor: 'pointer',
                 }}
               >
-                <CloverKLogo size={220} color={publicAppPalette.plum} strokeWidth={10} />
-              </Box>
+                <Box
+                  sx={{
+                    display: 'inline-flex',
+                    p: { xs: 2, sm: 2.5 },
+                    width: 'clamp(150px, 42vw, 240px)',
+                    borderRadius: { xs: '24px', sm: '28px' },
+                    background: 'radial-gradient(circle, rgba(233, 128, 252, 0.18) 0%, rgba(221, 255, 247, 0) 72%)',
+                    '& svg': {
+                      display: 'block',
+                      width: '100%',
+                      height: 'auto',
+                    },
+                  }}
+                >
+                  <CloverKLogo size={220} color={publicAppPalette.plum} strokeWidth={10} />
+                </Box>
+              </motion.button>
             </motion.div>
           </motion.div>
           <Typography
