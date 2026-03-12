@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { alpha } from '@mui/material/styles';
 import { Box, ButtonBase, Typography } from '@mui/material';
 import { usePublicPalette } from '../../context/PublicPaletteContext';
@@ -16,6 +17,59 @@ export default function PublicPaletteChecker() {
     setActivePaletteMode,
     setActivePaletteName,
   } = usePublicPalette();
+  const [isMinimized, setIsMinimized] = useState(false);
+
+  if (isMinimized) {
+    return (
+      <ButtonBase
+        onClick={() => setIsMinimized(false)}
+        sx={{
+          position: 'fixed',
+          zIndex: (theme) => theme.zIndex.tooltip,
+          bottom: 'calc(env(safe-area-inset-bottom) + 16px)',
+          left: { xs: '50%', sm: 'auto' },
+          right: { xs: 'auto', sm: '24px' },
+          transform: { xs: 'translateX(-50%)', sm: 'none' },
+          minWidth: '172px',
+          justifyContent: 'space-between',
+          gap: 1.5,
+          padding: '12px 14px',
+          borderRadius: '999px',
+          border: `1px solid ${alpha(activePalette.primaryTextColor, 0.12)}`,
+          backgroundColor: alpha(
+            activePalette.surfaceColor,
+            activePaletteMode === 'dark' ? 0.96 : 0.92
+          ),
+          backdropFilter: 'blur(18px)',
+          boxShadow: `0 18px 40px ${alpha(activePalette.primaryTextColor, 0.16)}`,
+        }}
+      >
+        <Typography
+          variant="body2"
+          sx={{
+            color: activePalette.primaryTextColor,
+            fontWeight: 700,
+          }}
+        >
+          Palette checker
+        </Typography>
+        <Box sx={{ display: 'flex', gap: 0.75 }}>
+          {activePalette.swatchColors.map((swatchColor) => (
+            <Box
+              key={`${activePaletteMode}-${swatchColor}`}
+              sx={{
+                width: '12px',
+                height: '12px',
+                borderRadius: '999px',
+                backgroundColor: swatchColor,
+                border: `1px solid ${alpha(activePalette.primaryTextColor, 0.14)}`,
+              }}
+            />
+          ))}
+        </Box>
+      </ButtonBase>
+    );
+  }
 
   return (
     <Box
@@ -42,16 +96,43 @@ export default function PublicPaletteChecker() {
         boxShadow: `0 18px 40px ${alpha(activePalette.primaryTextColor, 0.16)}`,
       }}
     >
-      <Typography
-        variant="overline"
+      <Box
         sx={{
-          color: activePalette.secondaryTextColor,
-          fontWeight: 700,
-          letterSpacing: '0.16em',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: 1,
         }}
       >
-        Palette checker
-      </Typography>
+        <Typography
+          variant="overline"
+          sx={{
+            color: activePalette.secondaryTextColor,
+            fontWeight: 700,
+            letterSpacing: '0.16em',
+          }}
+        >
+          Palette checker
+        </Typography>
+        <ButtonBase
+          onClick={() => setIsMinimized(true)}
+          sx={{
+            borderRadius: '999px',
+            padding: '6px 10px',
+            color: activePalette.secondaryTextColor,
+          }}
+        >
+          <Typography
+            variant="caption"
+            sx={{
+              fontWeight: 700,
+              letterSpacing: '0.04em',
+            }}
+          >
+            Minimize
+          </Typography>
+        </ButtonBase>
+      </Box>
       <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: 1 }}>
         {(['light', 'dark'] as const).map((paletteMode) => (
           <PaletteModeButton

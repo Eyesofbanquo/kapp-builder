@@ -63,9 +63,9 @@ export default function PublicAppFrame() {
             display: 'flex',
             flexDirection: 'column',
             paddingTop: 'calc(env(safe-area-inset-top) + 20px)',
-            paddingRight: { xs: '16px', sm: '24px', md: '32px' },
+            paddingRight: { xs: '12px', sm: '24px', md: '32px' },
             paddingBottom: 'calc(env(safe-area-inset-bottom) + 20px)',
-            paddingLeft: { xs: '16px', sm: '24px', md: '32px' },
+            paddingLeft: { xs: '12px', sm: '24px', md: '32px' },
           }}
         >
           <Outlet />
