@@ -1,9 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import { motion, useAnimationControls } from 'framer-motion';
 import CloverKLogo from '../../assets/CloverKLogo';
-import { publicAppPalette } from '../../theme/publicAppTheme';
-
-const comingSoonTextColor = '#40283F';
+import { usePublicPalette } from '../../context/PublicPaletteContext';
 
 function createRandomBounceAnimation() {
   const horizontalDirection = Math.random() > 0.5 ? 1 : -1;
@@ -41,6 +39,7 @@ function createRandomBounceAnimation() {
 
 export default function ComingSoonHero() {
   const interactionControls = useAnimationControls();
+  const { activePalette } = usePublicPalette();
 
   const handleLogoInteraction = () => {
     interactionControls.stop();
@@ -81,9 +80,10 @@ export default function ComingSoonHero() {
             py: { xs: 5, sm: 6, md: 7 },
             textAlign: 'center',
             borderRadius: { xs: '24px', sm: '32px' },
-            background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.86) 0%, rgba(255, 210, 252, 0.58) 100%)',
+            background: `linear-gradient(180deg, ${activePalette.cardGradientStart} 0%, ${activePalette.cardGradientEnd} 100%)`,
+            border: `1px solid ${activePalette.cardBorderColor}`,
             backdropFilter: 'blur(14px)',
-            boxShadow: '0 28px 80px rgba(35, 27, 27, 0.12)',
+            boxShadow: `0 28px 80px ${activePalette.cardShadowColor}`,
           }}
         >
           <motion.div
@@ -141,7 +141,7 @@ export default function ComingSoonHero() {
                     p: { xs: 2, sm: 2.5 },
                     width: 'clamp(150px, 42vw, 240px)',
                     borderRadius: { xs: '24px', sm: '28px' },
-                    background: 'radial-gradient(circle, rgba(233, 128, 252, 0.18) 0%, rgba(221, 255, 247, 0) 72%)',
+                    background: `radial-gradient(circle, ${activePalette.cardGradientEnd} 0%, rgba(255, 255, 255, 0) 72%)`,
                     '& svg': {
                       display: 'block',
                       width: '100%',
@@ -149,7 +149,11 @@ export default function ComingSoonHero() {
                     },
                   }}
                 >
-                  <CloverKLogo size={220} color={publicAppPalette.plum} strokeWidth={10} />
+                  <CloverKLogo
+                    size={220}
+                    color={activePalette.logoColor}
+                    strokeWidth={10}
+                  />
                 </Box>
               </motion.button>
             </motion.div>
@@ -158,7 +162,7 @@ export default function ComingSoonHero() {
             variant="h2"
             sx={{
               maxWidth: '8ch',
-              color: comingSoonTextColor,
+              color: activePalette.headingColor,
               fontSize: 'clamp(2.6rem, 9vw, 4.6rem)',
               lineHeight: 0.9,
               letterSpacing: '-0.05em',

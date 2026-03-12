@@ -1,9 +1,10 @@
 import { Box, Button, Typography } from '@mui/material';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
-import { publicAppPalette } from '../theme/publicAppTheme';
+import { usePublicPalette } from '../context/PublicPaletteContext';
 
 export default function NotFoundScreen() {
   const location = useLocation();
+  const { activePalette } = usePublicPalette();
 
   return (
     <Box
@@ -22,15 +23,15 @@ export default function NotFoundScreen() {
           py: { xs: 4, sm: 5 },
           textAlign: 'center',
           borderRadius: '32px',
-          backgroundColor: 'rgba(255, 255, 255, 0.82)',
-          border: '1px solid rgba(35, 27, 27, 0.08)',
-          boxShadow: '0 24px 60px rgba(35, 27, 27, 0.1)',
+          background: `linear-gradient(180deg, ${activePalette.cardGradientStart} 0%, ${activePalette.cardGradientEnd} 100%)`,
+          border: `1px solid ${activePalette.cardBorderColor}`,
+          boxShadow: `0 24px 60px ${activePalette.cardShadowColor}`,
         }}
       >
         <Typography
           variant="overline"
           sx={{
-            color: publicAppPalette.plum,
+            color: activePalette.accentColor,
             fontWeight: 700,
             letterSpacing: '0.18em',
           }}
