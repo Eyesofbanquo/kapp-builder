@@ -4,8 +4,10 @@
   box-sizing: border-box;
 }
 
-html {
-  background-color: #f5f5f5;
+html,
+body,
+#root {
+  min-height: 100%;
 }
 
 body {
@@ -13,6 +15,5 @@ body {
 }
 
 #root {
-  padding-top: env(safe-area-inset-top);
-  padding-bottom: env(safe-area-inset-bottom);
+  min-height: 100vh;
 }

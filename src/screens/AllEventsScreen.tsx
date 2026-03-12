@@ -8,13 +8,9 @@ import EventCard from '../components/AllEventsScreen/EventCard';
 import EditEventDialog from '../components/AllEventsScreen/EditEventDialog';
 import type { Event } from '../types/event';
 
-interface Props {
-  // No props needed; data comes from EventRepositoryContext
-}
-
 type SortOrder = 'asc' | 'desc';
 
-export default function AllEventsScreen(_props: Props) {
+export default function AllEventsScreen() {
   const { events, lastCreatedEventId, clearLastCreatedEventId } = useEventRepository();
   const { classes } = useClassRepository();
   const [searchQuery, setSearchQuery] = useState('');

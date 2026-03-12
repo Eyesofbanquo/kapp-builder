@@ -4,11 +4,7 @@ import { useClassRepository } from '../context/ClassRepositoryContext';
 import { useNavigation } from '../context/NavigationContext';
 import type { ClassFormState } from '../types/class';
 
-interface Props {
-  // eventId comes from currentParams
-}
-
-export default function CreateClassScreen(_props: Props) {
+export default function CreateClassScreen() {
   const { addClass } = useClassRepository();
   const { replaceWith, currentParams } = useNavigation();
 

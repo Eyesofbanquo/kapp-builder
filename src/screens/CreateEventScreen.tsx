@@ -5,11 +5,7 @@ import AddClassDialog from '../components/CreateEventScreen/AddClassDialog';
 import { useEventRepository } from '../context/EventRepositoryContext';
 import type { EventFormState } from '../types/event';
 
-interface Props {
-  // No external props needed; data and navigation come from context
-}
-
-export default function CreateEventScreen(_props: Props) {
+export default function CreateEventScreen() {
   const { addEvent } = useEventRepository();
   const [newEventId, setNewEventId] = useState<string | null>(null);
 

@@ -19,7 +19,7 @@ function MapView({ location, initialCenter }: { location: SelectedLocation | nul
 
   useEffect(() => {
     if (!location) map?.panTo(initialCenter);
-  }, [map, initialCenter]);
+  }, [map, initialCenter, location]);
 
   useEffect(() => {
     if (location) map?.panTo({ lat: location.lat, lng: location.lng });
@@ -63,7 +63,7 @@ export default function LocationPicker({ value, onChange }: Props) {
     }
   }, []);
 
-  const MAP_ID = import.meta.env.VITE_GOOGLE_MAPS_MAP_ID
+  const MAP_ID = import.meta.env.VITE_GOOGLE_MAPS_MAP_ID;
 
   const handleInputChange = (val: string) => {
     setQuery(val);

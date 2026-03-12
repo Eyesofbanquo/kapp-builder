@@ -1,0 +1,192 @@
+import { alpha, createTheme } from '@mui/material/styles';
+import type { Theme } from '@mui/material/styles';
+import type {
+  PublicPaletteDefinition,
+  PublicPaletteMode,
+  PublicPaletteName,
+  PublicPaletteVariant,
+} from '../types/publicPalette';
+
+export const defaultPublicPaletteName: PublicPaletteName = 'pinkify';
+export const defaultPublicPaletteMode: PublicPaletteMode = 'light';
+
+export const publicPaletteCollection: Record<PublicPaletteName, PublicPaletteDefinition> = {
+  pinkify: {
+    name: 'pinkify',
+    label: 'Pinkify',
+    light: {
+      backgroundGradientStart: '#DDFFF7',
+      backgroundGradientMiddle: '#FFD2FC',
+      backgroundGradientEnd: '#FFFFFF',
+      blobPrimary: '#E980FC',
+      blobSecondary: '#B96AC9',
+      cardGradientStart: 'rgba(255, 255, 255, 0.88)',
+      cardGradientEnd: 'rgba(255, 210, 252, 0.6)',
+      cardBorderColor: 'rgba(35, 27, 27, 0.08)',
+      cardShadowColor: 'rgba(35, 27, 27, 0.12)',
+      headingColor: '#40283F',
+      logoColor: '#B96AC9',
+      primaryTextColor: '#231B1B',
+      secondaryTextColor: 'rgba(35, 27, 27, 0.72)',
+      surfaceColor: '#FFFFFF',
+      buttonColor: '#B96AC9',
+      buttonTextColor: '#231B1B',
+      accentColor: '#E980FC',
+      swatchColors: ['#DDFFF7', '#E980FC', '#B96AC9'],
+    },
+    dark: {
+      backgroundGradientStart: '#231B1B',
+      backgroundGradientMiddle: '#3A2436',
+      backgroundGradientEnd: '#120D0D',
+      blobPrimary: '#E980FC',
+      blobSecondary: '#FFD2FC',
+      cardGradientStart: 'rgba(50, 34, 49, 0.92)',
+      cardGradientEnd: 'rgba(35, 27, 27, 0.94)',
+      cardBorderColor: 'rgba(255, 210, 252, 0.12)',
+      cardShadowColor: 'rgba(0, 0, 0, 0.34)',
+      headingColor: '#FFD2FC',
+      logoColor: '#DDFFF7',
+      primaryTextColor: '#FFF7FC',
+      secondaryTextColor: 'rgba(255, 247, 252, 0.74)',
+      surfaceColor: '#322231',
+      buttonColor: '#DDFFF7',
+      buttonTextColor: '#231B1B',
+      accentColor: '#E980FC',
+      swatchColors: ['#231B1B', '#FFD2FC', '#DDFFF7'],
+    },
+  },
+  sunwash: {
+    name: 'sunwash',
+    label: 'Sunwash',
+    light: {
+      backgroundGradientStart: '#FAFDF6',
+      backgroundGradientMiddle: '#EEEFA8',
+      backgroundGradientEnd: '#FFFFFF',
+      blobPrimary: '#EAE151',
+      blobSecondary: '#DDD92A',
+      cardGradientStart: 'rgba(250, 253, 246, 0.94)',
+      cardGradientEnd: 'rgba(238, 239, 168, 0.72)',
+      cardBorderColor: 'rgba(45, 42, 50, 0.1)',
+      cardShadowColor: 'rgba(45, 42, 50, 0.14)',
+      headingColor: '#2D2A32',
+      logoColor: '#2D2A32',
+      primaryTextColor: '#2D2A32',
+      secondaryTextColor: 'rgba(45, 42, 50, 0.72)',
+      surfaceColor: '#FAFDF6',
+      buttonColor: '#2D2A32',
+      buttonTextColor: '#FAFDF6',
+      accentColor: '#DDD92A',
+      swatchColors: ['#FAFDF6', '#DDD92A', '#2D2A32'],
+    },
+    dark: {
+      backgroundGradientStart: '#17161A',
+      backgroundGradientMiddle: '#2D2A32',
+      backgroundGradientEnd: '#0E0D10',
+      blobPrimary: '#DDD92A',
+      blobSecondary: '#EAE151',
+      cardGradientStart: 'rgba(42, 39, 46, 0.95)',
+      cardGradientEnd: 'rgba(23, 22, 26, 0.96)',
+      cardBorderColor: 'rgba(234, 225, 81, 0.14)',
+      cardShadowColor: 'rgba(0, 0, 0, 0.36)',
+      headingColor: '#EEEFA8',
+      logoColor: '#FAFDF6',
+      primaryTextColor: '#FAFDF6',
+      secondaryTextColor: 'rgba(250, 253, 246, 0.74)',
+      surfaceColor: '#2D2A32',
+      buttonColor: '#EEEFA8',
+      buttonTextColor: '#17161A',
+      accentColor: '#DDD92A',
+      swatchColors: ['#2D2A32', '#DDD92A', '#FAFDF6'],
+    },
+  },
+};
+
+export const publicPaletteOptions: readonly PublicPaletteDefinition[] = [
+  publicPaletteCollection.pinkify,
+  publicPaletteCollection.sunwash,
+];
+
+const publicThemeCache: Partial<Record<`${PublicPaletteName}:${PublicPaletteMode}`, Theme>> = {};
+
+export function isPublicPaletteName(storageValue: string): storageValue is PublicPaletteName {
+  return storageValue in publicPaletteCollection;
+}
+
+export function isPublicPaletteMode(storageValue: string): storageValue is PublicPaletteMode {
+  return storageValue === 'light' || storageValue === 'dark';
+}
+
+export function getPublicPaletteDefinition(
+  paletteName: PublicPaletteName
+): PublicPaletteDefinition {
+  return publicPaletteCollection[paletteName];
+}
+
+export function getPublicPaletteVariant(
+  paletteName: PublicPaletteName,
+  paletteMode: PublicPaletteMode
+): PublicPaletteVariant {
+  return getPublicPaletteDefinition(paletteName)[paletteMode];
+}
+
+export function getPublicAppTheme(
+  paletteName: PublicPaletteName,
+  paletteMode: PublicPaletteMode
+): Theme {
+  const themeCacheKey = `${paletteName}:${paletteMode}` as const;
+  const existingTheme = publicThemeCache[themeCacheKey];
+
+  if (existingTheme) {
+    return existingTheme;
+  }
+
+  const paletteVariant = getPublicPaletteVariant(paletteName, paletteMode);
+  const publicTheme = createTheme({
+    palette: {
+      mode: paletteMode,
+      primary: {
+        main: paletteVariant.buttonColor,
+        contrastText: paletteVariant.buttonTextColor,
+      },
+      secondary: {
+        main: paletteVariant.accentColor,
+        contrastText: paletteVariant.primaryTextColor,
+      },
+      background: {
+        default: paletteVariant.backgroundGradientStart,
+        paper: alpha(paletteVariant.surfaceColor, paletteMode === 'dark' ? 0.94 : 0.88),
+      },
+      text: {
+        primary: paletteVariant.primaryTextColor,
+        secondary: paletteVariant.secondaryTextColor,
+      },
+      divider: alpha(paletteVariant.primaryTextColor, paletteMode === 'dark' ? 0.18 : 0.1),
+    },
+    shape: {
+      borderRadius: 24,
+    },
+    typography: {
+      fontFamily: '"Avenir Next", "Trebuchet MS", "Segoe UI", sans-serif',
+      h1: {
+        fontWeight: 700,
+        letterSpacing: '-0.04em',
+      },
+      h2: {
+        fontWeight: 700,
+        letterSpacing: '-0.04em',
+      },
+      h3: {
+        fontWeight: 700,
+        letterSpacing: '-0.03em',
+      },
+      button: {
+        textTransform: 'none',
+        fontWeight: 600,
+        letterSpacing: '0.01em',
+      },
+    },
+  });
+
+  publicThemeCache[themeCacheKey] = publicTheme;
+  return publicTheme;
+}
