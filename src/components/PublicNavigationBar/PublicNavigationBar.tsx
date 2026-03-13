@@ -17,10 +17,9 @@ export default function PublicNavigationBar({ title }: Props) {
       position="sticky"
       elevation={0}
       sx={{
-        backgroundColor: `${activePalette.surfaceColor}cc`,
-        backdropFilter: 'blur(12px)',
+        backgroundColor: activePalette.surface,
         borderBottom: 1,
-        borderColor: activePalette.cardBorderColor,
+        borderColor: activePalette.outlineVariant,
       }}
     >
       <Toolbar disableGutters>
@@ -32,14 +31,14 @@ export default function PublicNavigationBar({ title }: Props) {
             onClick={() => navigate(-1)}
             aria-label="Go back"
             edge="start"
-            sx={{ marginRight: 1, color: activePalette.accentColor }}
+            sx={{ marginRight: 1, color: activePalette.primary }}
           >
             <ArrowBackIosNew />
           </IconButton>
           <Typography
             variant="h5"
             fontWeight={700}
-            sx={{ color: activePalette.headingColor }}
+            sx={{ color: activePalette.onSurface }}
           >
             {title}
           </Typography>

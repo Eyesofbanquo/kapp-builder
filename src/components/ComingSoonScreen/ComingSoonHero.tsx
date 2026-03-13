@@ -80,11 +80,9 @@ export default function ComingSoonHero() {
             px: { xs: 3, sm: 4.5, md: 5 },
             py: { xs: 5, sm: 6, md: 7 },
             textAlign: 'center',
-            borderRadius: { xs: '24px', sm: '32px' },
-            background: `linear-gradient(180deg, ${activePalette.cardGradientStart} 0%, ${activePalette.cardGradientEnd} 100%)`,
-            border: `1px solid ${activePalette.cardBorderColor}`,
-            backdropFilter: 'blur(14px)',
-            boxShadow: `0 28px 80px ${activePalette.cardShadowColor}`,
+            borderRadius: '16px',
+            backgroundColor: activePalette.surfaceContainerLow,
+            border: `1px solid ${activePalette.outlineVariant}`,
           }}
         >
           <motion.div
@@ -142,8 +140,8 @@ export default function ComingSoonHero() {
                     display: 'inline-flex',
                     p: { xs: 2, sm: 2.5 },
                     width: 'clamp(150px, 42vw, 240px)',
-                    borderRadius: { xs: '24px', sm: '28px' },
-                    background: `radial-gradient(circle, ${activePalette.cardGradientEnd} 0%, rgba(255, 255, 255, 0) 72%)`,
+                    borderRadius: '16px',
+                    backgroundColor: 'transparent',
                     '& svg': {
                       display: 'block',
                       width: '100%',
@@ -153,7 +151,7 @@ export default function ComingSoonHero() {
                 >
                   <CloverKLogo
                     size={220}
-                    color={activePalette.logoColor}
+                    color={activePalette.primary}
                     strokeWidth={10}
                   />
                 </Box>
@@ -164,11 +162,10 @@ export default function ComingSoonHero() {
             variant="h2"
             sx={{
               maxWidth: '8ch',
-              color: activePalette.headingColor,
+              color: activePalette.onSurface,
               fontSize: 'clamp(2.6rem, 9vw, 4.6rem)',
               lineHeight: 0.9,
               letterSpacing: '-0.05em',
-              textShadow: '0 1px 0 rgba(255, 255, 255, 0.35)',
             }}
           >
             Coming soon

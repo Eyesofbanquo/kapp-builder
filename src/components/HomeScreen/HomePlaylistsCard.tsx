@@ -52,14 +52,12 @@ export default function HomePlaylistsCard() {
           width: '100%',
           px: { xs: 3, sm: 4.5 },
           py: { xs: 3, sm: 4 },
-          borderRadius: { xs: '24px', sm: '32px' },
-          background: `linear-gradient(180deg, ${activePalette.cardGradientStart}E6 0%, ${activePalette.cardGradientEnd}E6 100%)`,
-          border: `1px solid ${activePalette.cardBorderColor}54`,
-          backdropFilter: 'blur(6px)',
-          boxShadow: `0 16px 48px ${activePalette.cardShadowColor}`,
-          transition: 'box-shadow 0.2s ease',
+          borderRadius: '16px',
+          backgroundColor: activePalette.surfaceContainerLow,
+          border: `1px solid ${activePalette.outlineVariant}`,
+          transition: 'background-color 0.2s ease',
           '&:hover': {
-            boxShadow: `0 16px 48px ${activePalette.cardShadowColor}, inset 0 0 14px ${activePalette.accentColor}33`,
+            backgroundColor: activePalette.surfaceContainerHigh,
           },
         }}
       >
@@ -68,7 +66,7 @@ export default function HomePlaylistsCard() {
           sx={{
             position: 'relative',
             zIndex: 1,
-            color: activePalette.headingColor,
+            color: activePalette.onSurface,
             letterSpacing: '0.08em',
           }}
         >
@@ -96,12 +94,12 @@ export default function HomePlaylistsCard() {
                 variant="outlined"
                 size="small"
                 sx={{
-                  borderColor: `${activePalette.accentColor}66`,
-                  color: activePalette.secondaryTextColor,
-                  backgroundColor: `${activePalette.surfaceColor}87`,
+                  borderColor: activePalette.outline,
+                  color: activePalette.onPrimaryContainer,
+                  backgroundColor: activePalette.primaryContainer,
                   cursor: 'pointer',
                   '&:hover': {
-                    backgroundColor: `${activePalette.surfaceColor}B3`,
+                    backgroundColor: activePalette.surfaceContainerHigh,
                   },
                 }}
               />
@@ -114,14 +112,14 @@ export default function HomePlaylistsCard() {
           sx={{
             position: 'relative',
             zIndex: 1,
-            backgroundColor: activePalette.buttonColor,
-            color: activePalette.buttonTextColor,
+            backgroundColor: activePalette.primary,
+            color: activePalette.onPrimary,
             borderRadius: '16px',
             px: 4,
             py: 1.2,
             fontSize: '1rem',
             '&:hover': {
-              backgroundColor: activePalette.buttonColor,
+              backgroundColor: activePalette.primary,
               opacity: 0.9,
             },
           }}
@@ -130,7 +128,7 @@ export default function HomePlaylistsCard() {
         </Button>
 
         <PlaylistsWaveArc
-          strokeColor={activePalette.accentColor}
+          strokeColor={activePalette.secondary}
           strokeOpacity={0.25}
         />
       </Box>

@@ -25,7 +25,7 @@ export default function ContactScreen({ heading = 'Contact' }: Props) {
         <Typography
           variant="h4"
           fontWeight={700}
-          sx={{ color: activePalette.headingColor }}
+          sx={{ color: activePalette.onSurface }}
         >
           {heading}
         </Typography>

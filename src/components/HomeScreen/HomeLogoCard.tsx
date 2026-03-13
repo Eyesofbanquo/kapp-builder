@@ -72,11 +72,9 @@ export default function HomeLogoCard() {
           width: '100%',
           px: { xs: 3, sm: 4.5 },
           py: { xs: 4, sm: 5 },
-          borderRadius: { xs: '24px', sm: '32px' },
-          background: `linear-gradient(180deg, ${activePalette.cardGradientStart} 0%, ${activePalette.cardGradientEnd} 100%)`,
-          border: `1px solid ${activePalette.cardBorderColor}`,
-          backdropFilter: 'blur(14px)',
-          boxShadow: `0 28px 80px ${activePalette.cardShadowColor}`,
+          borderRadius: '16px',
+          backgroundColor: activePalette.surfaceContainerLow,
+          border: `1px solid ${activePalette.outlineVariant}`,
         }}
       >
         <motion.div
@@ -119,8 +117,8 @@ export default function HomeLogoCard() {
                   display: 'inline-flex',
                   p: { xs: 2, sm: 2.5 },
                   width: 'clamp(120px, 36vw, 200px)',
-                  borderRadius: { xs: '24px', sm: '28px' },
-                  background: `radial-gradient(circle, ${activePalette.cardGradientEnd} 0%, rgba(255, 255, 255, 0) 72%)`,
+                  borderRadius: '16px',
+                  backgroundColor: 'transparent',
                   '& svg': {
                     display: 'block',
                     width: '100%',
@@ -130,7 +128,7 @@ export default function HomeLogoCard() {
               >
                 <CloverKLogo
                   size={200}
-                  color={activePalette.logoColor}
+                  color={activePalette.primary}
                   strokeWidth={10}
                 />
               </Box>
