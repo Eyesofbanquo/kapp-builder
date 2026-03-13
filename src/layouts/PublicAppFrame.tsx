@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Box } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
@@ -13,6 +14,10 @@ const ROUTE_TITLES: Record<string, string> = {
 
 export default function PublicAppFrame() {
   const { activePalette, activePaletteMode, activePaletteName } = usePublicPalette();
+
+  useEffect(() => {
+    document.documentElement.style.backgroundColor = activePalette.surfaceTint;
+  }, [activePalette.surfaceTint]);
   const location = useLocation();
   const navigationTitle = ROUTE_TITLES[location.pathname];
 
@@ -23,7 +28,6 @@ export default function PublicAppFrame() {
         sx={{
           position: 'relative',
           minHeight: '100dvh',
-          backgroundColor: activePalette.background,
         }}
       >
         <Box
