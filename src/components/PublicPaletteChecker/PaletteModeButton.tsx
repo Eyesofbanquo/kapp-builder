@@ -1,4 +1,5 @@
 import { ButtonBase, Typography } from '@mui/material';
+import { usePublicPalette } from '../../context/PublicPaletteContext';
 import type { PublicPaletteMode } from '../../types/publicPalette';
 
 interface Props {
@@ -11,6 +12,7 @@ interface Props {
 }
 
 export default function PaletteModeButton({ isActive, mode, onSelect }: Props) {
+  const { activePalette } = usePublicPalette();
   const label = mode === 'dark' ? 'Dark mode' : 'Light mode';
 
   return (
@@ -19,27 +21,17 @@ export default function PaletteModeButton({ isActive, mode, onSelect }: Props) {
       sx={{
         justifyContent: 'center',
         borderRadius: '16px',
-        border: `1px solid ${
-          isActive ? 'rgba(255, 255, 255, 0.18)' : 'rgba(255, 255, 255, 0.08)'
-        }`,
-        backgroundColor:
-          mode === 'dark'
-            ? isActive
-              ? 'rgba(24, 22, 28, 0.92)'
-              : 'rgba(24, 22, 28, 0.78)'
-            : isActive
-              ? 'rgba(255, 255, 255, 0.9)'
-              : 'rgba(255, 255, 255, 0.62)',
+        border: `1px solid ${isActive ? activePalette.outline : activePalette.outlineVariant}`,
+        backgroundColor: isActive
+          ? activePalette.surfaceContainerHigh
+          : activePalette.surfaceContainerLow,
         padding: '12px',
       }}
     >
       <Typography
         variant="body2"
         sx={{
-          color:
-            mode === 'dark'
-              ? 'rgba(250, 253, 246, 0.96)'
-              : 'rgba(35, 27, 27, 0.92)',
+          color: activePalette.onSurface,
           fontWeight: 700,
         }}
       >

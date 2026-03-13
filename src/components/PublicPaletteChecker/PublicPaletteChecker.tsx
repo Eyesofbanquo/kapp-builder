@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { alpha } from '@mui/material/styles';
 import { Box, ButtonBase, Typography } from '@mui/material';
 import { usePublicPalette } from '../../context/PublicPaletteContext';
 import PaletteModeButton from './PaletteModeButton';
@@ -35,19 +34,15 @@ export default function PublicPaletteChecker() {
           gap: 1.5,
           padding: '12px 14px',
           borderRadius: '999px',
-          border: `1px solid ${alpha(activePalette.primaryTextColor, 0.12)}`,
-          backgroundColor: alpha(
-            activePalette.surfaceColor,
-            activePaletteMode === 'dark' ? 0.96 : 0.92
-          ),
-          backdropFilter: 'blur(18px)',
-          boxShadow: `0 18px 40px ${alpha(activePalette.primaryTextColor, 0.16)}`,
+          border: `1px solid ${activePalette.outline}`,
+          backgroundColor: activePalette.surfaceContainerHigh,
+          boxShadow: 1,
         }}
       >
         <Typography
           variant="body2"
           sx={{
-            color: activePalette.primaryTextColor,
+            color: activePalette.onSurface,
             fontWeight: 700,
           }}
         >
@@ -62,7 +57,7 @@ export default function PublicPaletteChecker() {
                 height: '12px',
                 borderRadius: '999px',
                 backgroundColor: swatchColor,
-                border: `1px solid ${alpha(activePalette.primaryTextColor, 0.14)}`,
+                border: `1px solid ${activePalette.outlineVariant}`,
               }}
             />
           ))}
@@ -87,13 +82,9 @@ export default function PublicPaletteChecker() {
         gap: 1.5,
         padding: '14px',
         borderRadius: '22px',
-        border: `1px solid ${alpha(activePalette.primaryTextColor, 0.12)}`,
-        backgroundColor: alpha(
-          activePalette.surfaceColor,
-          activePaletteMode === 'dark' ? 0.96 : 0.92
-        ),
-        backdropFilter: 'blur(18px)',
-        boxShadow: `0 18px 40px ${alpha(activePalette.primaryTextColor, 0.16)}`,
+        border: `1px solid ${activePalette.outline}`,
+        backgroundColor: activePalette.surfaceContainerHigh,
+        boxShadow: 1,
       }}
     >
       <Box
@@ -107,7 +98,7 @@ export default function PublicPaletteChecker() {
         <Typography
           variant="overline"
           sx={{
-            color: activePalette.secondaryTextColor,
+            color: activePalette.onSurfaceVariant,
             fontWeight: 700,
             letterSpacing: '0.16em',
           }}
@@ -119,7 +110,7 @@ export default function PublicPaletteChecker() {
           sx={{
             borderRadius: '999px',
             padding: '6px 10px',
-            color: activePalette.secondaryTextColor,
+            color: activePalette.onSurfaceVariant,
           }}
         >
           <Typography
@@ -158,11 +149,9 @@ export default function PublicPaletteChecker() {
                 textAlign: 'left',
                 borderRadius: '18px',
                 border: `1px solid ${
-                  isActive
-                    ? alpha(previewPalette.primaryTextColor, 0.2)
-                    : alpha(activePalette.primaryTextColor, 0.08)
+                  isActive ? previewPalette.outline : activePalette.outlineVariant
                 }`,
-                background: `linear-gradient(180deg, ${previewPalette.cardGradientStart} 0%, ${previewPalette.cardGradientEnd} 100%)`,
+                backgroundColor: previewPalette.surfaceContainerLow,
                 transition: 'transform 180ms ease, background-color 180ms ease',
                 '&:hover': {
                   transform: 'translateY(-1px)',
@@ -187,7 +176,7 @@ export default function PublicPaletteChecker() {
                         height: '16px',
                         borderRadius: '999px',
                         backgroundColor: swatchColor,
-                        border: `1px solid ${alpha(previewPalette.primaryTextColor, 0.14)}`,
+                        border: `1px solid ${previewPalette.outlineVariant}`,
                       }}
                     />
                   ))}
@@ -196,7 +185,7 @@ export default function PublicPaletteChecker() {
                   <Typography
                     variant="body2"
                     sx={{
-                      color: previewPalette.primaryTextColor,
+                      color: previewPalette.onSurface,
                       fontWeight: 700,
                     }}
                   >
@@ -205,7 +194,7 @@ export default function PublicPaletteChecker() {
                   <Typography
                     variant="caption"
                     sx={{
-                      color: alpha(previewPalette.primaryTextColor, 0.72),
+                      color: previewPalette.onSurfaceVariant,
                       fontWeight: 500,
                     }}
                   >
