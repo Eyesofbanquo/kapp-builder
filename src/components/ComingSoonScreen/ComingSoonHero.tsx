@@ -74,7 +74,8 @@ export default function ComingSoonHero() {
             alignItems: 'center',
             justifyContent: 'center',
             gap: { xs: 3, sm: 4 },
-            width: 'min(100%, 420px)',
+            width: '100%',
+            maxWidth: { xs: '432px', sm: '420px' },
             minHeight: { xs: '560px', sm: '620px' },
             px: { xs: 3, sm: 4.5, md: 5 },
             py: { xs: 5, sm: 6, md: 7 },
@@ -133,6 +134,7 @@ export default function ComingSoonHero() {
                   border: 'none',
                   background: 'transparent',
                   cursor: 'pointer',
+                  WebkitTapHighlightColor: 'transparent',
                 }}
               >
                 <Box
