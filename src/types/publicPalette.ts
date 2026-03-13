@@ -1,4 +1,4 @@
-export type PublicPaletteName = 'pinkify' | 'sunwash' | 'tidefire' | 'rosemist';
+export type PublicPaletteName = 'pinkify' | 'sunwash' | 'tidefire' | 'rosemist' | 'jadecove' | 'dawnbloom';
 
 export type PublicPaletteMode = 'light' | 'dark';
 
