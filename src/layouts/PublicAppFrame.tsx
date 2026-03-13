@@ -1,13 +1,20 @@
 import { Box } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
+import PublicNavigationBar from '../components/PublicNavigationBar/PublicNavigationBar';
 import PublicPaletteChecker from '../components/PublicPaletteChecker/PublicPaletteChecker';
 import { usePublicPalette } from '../context/PublicPaletteContext';
 import { getPublicAppTheme } from '../theme/publicAppTheme';
 
+const ROUTE_TITLES: Record<string, string> = {
+  '/contact': 'Contact',
+};
+
 export default function PublicAppFrame() {
   const { activePalette, activePaletteMode, activePaletteName } = usePublicPalette();
+  const location = useLocation();
+  const navigationTitle = ROUTE_TITLES[location.pathname];
 
   return (
     <ThemeProvider theme={getPublicAppTheme(activePaletteName, activePaletteMode)}>
@@ -68,6 +75,7 @@ export default function PublicAppFrame() {
             paddingLeft: { xs: '12px', sm: '24px', md: '32px' },
           }}
         >
+          {navigationTitle && <PublicNavigationBar title={navigationTitle} />}
           <Outlet />
         </Box>
         <PublicPaletteChecker />

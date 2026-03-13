@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import ComingSoonScreen from '../screens/ComingSoonScreen';
+import ContactScreen from '../screens/ContactScreen';
 import HomeScreen from '../screens/HomeScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import BackendAppLayout from './BackendAppLayout';
@@ -14,6 +15,7 @@ export default function AppRouterLayout() {
         <Route path="/" element={<PublicAppLayout />}>
           <Route index element={<ComingSoonScreen />} />
           <Route path="home" element={<HomeScreen />} />
+          <Route path="contact" element={<ContactScreen />} />
           <Route path="*" element={<NotFoundScreen />} />
         </Route>
       </Routes>

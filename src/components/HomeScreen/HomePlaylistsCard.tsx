@@ -31,12 +31,14 @@ export default function HomePlaylistsCard() {
   const { activePalette } = usePublicPalette();
 
   return (
-    <Box
-      sx={{
+    <motion.div
+      whileHover={{ y: -4 }}
+      transition={{ type: 'spring', stiffness: 300, damping: 24 }}
+      style={{
         display: 'flex',
         justifyContent: 'center',
         width: '100%',
-        maxWidth: { xs: '400px', sm: '420px' },
+        maxWidth: '420px',
       }}
     >
       <Box
@@ -55,6 +57,10 @@ export default function HomePlaylistsCard() {
           border: `1px solid ${activePalette.cardBorderColor}54`,
           backdropFilter: 'blur(6px)',
           boxShadow: `0 16px 48px ${activePalette.cardShadowColor}`,
+          transition: 'box-shadow 0.2s ease',
+          '&:hover': {
+            boxShadow: `0 16px 48px ${activePalette.cardShadowColor}, inset 0 0 14px ${activePalette.accentColor}33`,
+          },
         }}
       >
         <Typography
@@ -66,7 +72,7 @@ export default function HomePlaylistsCard() {
             letterSpacing: '0.08em',
           }}
         >
-          Classes
+          Specialties
         </Typography>
 
         <Box
@@ -128,6 +134,6 @@ export default function HomePlaylistsCard() {
           strokeOpacity={0.25}
         />
       </Box>
-    </Box>
+    </motion.div>
   );
 }
