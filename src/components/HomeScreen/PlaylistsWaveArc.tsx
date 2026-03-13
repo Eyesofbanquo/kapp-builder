@@ -34,13 +34,14 @@ export default function PlaylistsWaveArc({ strokeColor, strokeOpacity }: Props) 
           strokeLinecap="round"
           strokeOpacity={strokeOpacity}
           initial={{ pathLength: 0, pathOffset: 0 }}
-          animate={{ pathLength: 1, pathOffset: [0, 1] }}
+          animate={{ pathLength: 1, pathOffset: 1 }}
           transition={{
             pathLength: { duration: 2, ease: 'easeInOut' },
             pathOffset: {
               duration: 4,
               repeat: Infinity,
-              ease: 'linear',
+              repeatType: 'reverse',
+              ease: 'easeInOut',
             },
           }}
         />
