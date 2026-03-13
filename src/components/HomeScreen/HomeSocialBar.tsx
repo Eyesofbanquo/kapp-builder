@@ -17,17 +17,17 @@ export default function HomeSocialBar() {
         gap: { xs: 1, sm: 1.5 },
       }}
     >
-      <IconButton aria-label="Instagram" sx={{ color: activePalette.secondaryTextColor }}>
+      <IconButton aria-label="Instagram" sx={{ color: activePalette.onSurfaceVariant }}>
         <InstagramIcon />
       </IconButton>
       <IconButton
         aria-label="Email"
         onClick={() => navigate('/contact')}
-        sx={{ color: activePalette.secondaryTextColor }}
+        sx={{ color: activePalette.onSurfaceVariant }}
       >
         <EmailIcon />
       </IconButton>
-      <IconButton aria-label="Phone" sx={{ color: activePalette.secondaryTextColor }}>
+      <IconButton aria-label="Phone" sx={{ color: activePalette.onSurfaceVariant }}>
         <PhoneIcon />
       </IconButton>
     </Box>
