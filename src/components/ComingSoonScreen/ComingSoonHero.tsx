@@ -134,6 +134,7 @@ export default function ComingSoonHero() {
                   border: 'none',
                   background: 'transparent',
                   cursor: 'pointer',
+                  WebkitTapHighlightColor: 'transparent',
                 }}
               >
                 <Box
