@@ -28,7 +28,7 @@ export default function HomeLetterBox({ letter }: Props) {
           cursor: 'default',
           transition: 'box-shadow 0.2s ease',
           '&:hover': {
-            boxShadow: `0 8px 24px ${activePalette.accentColor}66`,
+            boxShadow: `inset 0 0 20px ${activePalette.accentColor}66`,
           },
         }}
       >
