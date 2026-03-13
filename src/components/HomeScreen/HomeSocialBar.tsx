@@ -2,10 +2,12 @@ import EmailIcon from '@mui/icons-material/Email';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import PhoneIcon from '@mui/icons-material/Phone';
 import { Box, IconButton } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import { usePublicPalette } from '../../context/PublicPaletteContext';
 
 export default function HomeSocialBar() {
   const { activePalette } = usePublicPalette();
+  const navigate = useNavigate();
 
   return (
     <Box
@@ -18,7 +20,11 @@ export default function HomeSocialBar() {
       <IconButton aria-label="Instagram" sx={{ color: activePalette.secondaryTextColor }}>
         <InstagramIcon />
       </IconButton>
-      <IconButton aria-label="Email" sx={{ color: activePalette.secondaryTextColor }}>
+      <IconButton
+        aria-label="Email"
+        onClick={() => navigate('/contact')}
+        sx={{ color: activePalette.secondaryTextColor }}
+      >
         <EmailIcon />
       </IconButton>
       <IconButton aria-label="Phone" sx={{ color: activePalette.secondaryTextColor }}>
