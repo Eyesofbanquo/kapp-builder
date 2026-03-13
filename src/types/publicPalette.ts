@@ -3,23 +3,37 @@ export type PublicPaletteName = 'pinkify' | 'sunwash' | 'tidefire' | 'rosemist' 
 export type PublicPaletteMode = 'light' | 'dark';
 
 export interface PublicPaletteVariant {
-  backgroundGradientStart: string;
-  backgroundGradientMiddle: string;
-  backgroundGradientEnd: string;
-  blobPrimary: string;
-  blobSecondary: string;
-  cardGradientStart: string;
-  cardGradientEnd: string;
-  cardBorderColor: string;
-  cardShadowColor: string;
-  headingColor: string;
-  logoColor: string;
-  primaryTextColor: string;
-  secondaryTextColor: string;
-  surfaceColor: string;
-  buttonColor: string;
-  buttonTextColor: string;
-  accentColor: string;
+  /** Page background color */
+  background: string;
+  /** Subtle tonal shift layer overlaid on background */
+  surfaceTint: string;
+  /** Cards and sheets fill color */
+  surface: string;
+  /** Subtle card fill */
+  surfaceContainerLow: string;
+  /** Elevated card fill and hover state */
+  surfaceContainerHigh: string;
+  /** Card borders and dividers */
+  outline: string;
+  /** Subtler borders */
+  outlineVariant: string;
+  /** Primary text color */
+  onSurface: string;
+  /** Secondary text color */
+  onSurfaceVariant: string;
+  /** Buttons, logo, and active elements */
+  primary: string;
+  /** Text on primary colored elements */
+  onPrimary: string;
+  /** Tonal fills for chips and containers */
+  primaryContainer: string;
+  /** Text on primaryContainer elements */
+  onPrimaryContainer: string;
+  /** Accent color for secondary elements */
+  secondary: string;
+  /** Text on secondary colored elements */
+  onSecondary: string;
+  /** Three representative swatch colors for the palette */
   swatchColors: readonly [string, string, string];
 }
 
