@@ -322,7 +322,7 @@ export function getPublicAppTheme(
       borderRadius: 16,
     },
     typography: {
-      fontFamily: '"Avenir Next", "Trebuchet MS", "Segoe UI", sans-serif',
+      fontFamily: '"Spectral", "Georgia", "Times New Roman", serif',
       h1: {
         fontWeight: 700,
         letterSpacing: '-0.04em',
