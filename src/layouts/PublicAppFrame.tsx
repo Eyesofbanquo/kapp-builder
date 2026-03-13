@@ -23,8 +23,7 @@ export default function PublicAppFrame() {
         sx={{
           position: 'relative',
           minHeight: '100dvh',
-          overflow: 'hidden',
-          background: `linear-gradient(160deg, ${activePalette.backgroundGradientStart} 0%, ${activePalette.backgroundGradientMiddle} 48%, ${activePalette.backgroundGradientEnd} 100%)`,
+          backgroundColor: activePalette.background,
         }}
       >
         <Box
@@ -32,40 +31,13 @@ export default function PublicAppFrame() {
           sx={{
             position: 'absolute',
             inset: 0,
+            backgroundColor: activePalette.surfaceTint,
             pointerEvents: 'none',
           }}
-        >
-          <Box
-            sx={{
-              position: 'absolute',
-              top: -160,
-              right: -90,
-              width: 360,
-              height: 360,
-              borderRadius: '50%',
-              backgroundColor: activePalette.blobPrimary,
-              opacity: activePaletteMode === 'dark' ? 0.3 : 0.34,
-              filter: 'blur(48px)',
-            }}
-          />
-          <Box
-            sx={{
-              position: 'absolute',
-              bottom: -180,
-              left: -100,
-              width: 420,
-              height: 420,
-              borderRadius: '50%',
-              backgroundColor: activePalette.blobSecondary,
-              opacity: activePaletteMode === 'dark' ? 0.2 : 0.26,
-              filter: 'blur(52px)',
-            }}
-          />
-        </Box>
+        />
         <Box
           sx={{
             position: 'relative',
-            zIndex: 1,
             minHeight: '100dvh',
             display: 'flex',
             flexDirection: 'column',
