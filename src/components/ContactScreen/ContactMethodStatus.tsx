@@ -28,13 +28,13 @@ export default function ContactMethodStatus({ email, phoneNumber }: Props) {
       )}
       <Typography
         variant="body2"
-        sx={{ color: activePalette.secondaryTextColor }}
+        sx={{ color: activePalette.onSurfaceVariant }}
       >
         {isReady ? 'Ready' : 'Enter email or phone'}
       </Typography>
       <Typography
         variant="body2"
-        sx={{ color: activePalette.secondaryTextColor, marginLeft: 'auto' }}
+        sx={{ color: activePalette.onSurfaceVariant, marginLeft: 'auto' }}
       >
         ({filledCount}/2)
       </Typography>

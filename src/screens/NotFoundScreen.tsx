@@ -22,16 +22,15 @@ export default function NotFoundScreen() {
           px: { xs: 3, sm: 5 },
           py: { xs: 4, sm: 5 },
           textAlign: 'center',
-          borderRadius: '32px',
-          background: `linear-gradient(180deg, ${activePalette.cardGradientStart} 0%, ${activePalette.cardGradientEnd} 100%)`,
-          border: `1px solid ${activePalette.cardBorderColor}`,
-          boxShadow: `0 24px 60px ${activePalette.cardShadowColor}`,
+          borderRadius: '16px',
+          backgroundColor: activePalette.surfaceContainerLow,
+          border: `1px solid ${activePalette.outlineVariant}`,
         }}
       >
         <Typography
           variant="overline"
           sx={{
-            color: activePalette.accentColor,
+            color: activePalette.secondary,
             fontWeight: 700,
             letterSpacing: '0.18em',
           }}

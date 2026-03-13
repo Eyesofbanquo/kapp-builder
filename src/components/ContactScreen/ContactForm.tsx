@@ -39,13 +39,13 @@ export default function ContactForm({ onSubmit }: Props) {
 
   const fieldStyle = {
     '& .MuiOutlinedInput-root': {
-      color: activePalette.primaryTextColor,
-      '& fieldset': { borderColor: activePalette.cardBorderColor },
-      '&:hover fieldset': { borderColor: activePalette.accentColor },
-      '&.Mui-focused fieldset': { borderColor: activePalette.accentColor },
+      color: activePalette.onSurface,
+      '& fieldset': { borderColor: activePalette.outlineVariant },
+      '&:hover fieldset': { borderColor: activePalette.primary },
+      '&.Mui-focused fieldset': { borderColor: activePalette.primary },
     },
-    '& .MuiInputLabel-root': { color: activePalette.secondaryTextColor },
-    '& .MuiInputLabel-root.Mui-focused': { color: activePalette.accentColor },
+    '& .MuiInputLabel-root': { color: activePalette.onSurfaceVariant },
+    '& .MuiInputLabel-root.Mui-focused': { color: activePalette.primary },
   };
 
   return (
@@ -120,9 +120,9 @@ export default function ContactForm({ onSubmit }: Props) {
             borderRadius: 2,
             paddingY: 1.5,
             paddingX: 4,
-            backgroundColor: activePalette.buttonColor,
-            color: activePalette.buttonTextColor,
-            '&:hover': { backgroundColor: activePalette.accentColor },
+            backgroundColor: activePalette.primary,
+            color: activePalette.onPrimary,
+            '&:hover': { backgroundColor: activePalette.secondary },
           }}
         >
           Send
