@@ -2,9 +2,8 @@ import { useState } from 'react';
 import { Box, Button, TextField } from '@mui/material';
 import { usePublicPalette } from '../../context/PublicPaletteContext';
 import type { ContactFormState } from '../../types/contactForm';
+import { EMAIL_PATTERN } from '../../utils/validation';
 import ContactMethodStatus from './ContactMethodStatus';
-
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 interface Props {
   /** Called when the user submits the contact form */

@@ -2,8 +2,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { Box, Typography } from '@mui/material';
 import { usePublicPalette } from '../../context/PublicPaletteContext';
-
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+import { EMAIL_PATTERN } from '../../utils/validation';
 
 interface Props {
   /** The current value of the email field */
