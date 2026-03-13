@@ -4,6 +4,8 @@ import { usePublicPalette } from '../../context/PublicPaletteContext';
 import type { ContactFormState } from '../../types/contactForm';
 import ContactMethodStatus from './ContactMethodStatus';
 
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 interface Props {
   /** Called when the user submits the contact form */
   onSubmit: (formState: ContactFormState) => void;
@@ -21,7 +23,10 @@ export default function ContactForm({ onSubmit }: Props) {
   const { activePalette } = usePublicPalette();
   const [form, setForm] = useState<ContactFormState>(EMPTY_FORM);
 
-  const hasContactMethod = form.email.trim() !== '' || form.phoneNumber.trim() !== '';
+  const isEmailValid = form.email.trim() === '' || EMAIL_PATTERN.test(form.email.trim());
+  const hasValidEmail = form.email.trim() !== '' && isEmailValid;
+  const hasPhoneNumber = form.phoneNumber.trim() !== '';
+  const hasContactMethod = hasValidEmail || hasPhoneNumber;
   const isValid =
     form.firstName.trim() !== '' &&
     form.lastName.trim() !== '' &&
@@ -75,6 +80,8 @@ export default function ContactForm({ onSubmit }: Props) {
           onChange={(event) =>
             setForm((previous) => ({ ...previous, email: event.target.value }))
           }
+          error={form.email.trim() !== '' && !isEmailValid}
+          helperText={form.email.trim() !== '' && !isEmailValid ? 'Enter a valid email' : ''}
           sx={fieldStyle}
         />
         <TextField

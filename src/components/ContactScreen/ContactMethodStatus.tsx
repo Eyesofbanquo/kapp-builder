@@ -3,6 +3,8 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { Box, Typography } from '@mui/material';
 import { usePublicPalette } from '../../context/PublicPaletteContext';
 
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 interface Props {
   /** The current value of the email field */
   email: string;
@@ -13,7 +15,8 @@ interface Props {
 export default function ContactMethodStatus({ email, phoneNumber }: Props) {
   const { activePalette } = usePublicPalette();
 
-  const filledCount = (email.trim() ? 1 : 0) + (phoneNumber.trim() ? 1 : 0);
+  const hasValidEmail = email.trim() !== '' && EMAIL_PATTERN.test(email.trim());
+  const filledCount = (hasValidEmail ? 1 : 0) + (phoneNumber.trim() ? 1 : 0);
   const isReady = filledCount >= 1;
 
   return (
