@@ -1,20 +1,24 @@
+import { useRef } from 'react';
 import { Box } from '@mui/material';
 import { motion, useAnimationControls } from 'framer-motion';
 import CloverKLogo from '../../assets/CloverKLogo';
 import { usePublicPalette } from '../../context/PublicPaletteContext';
-import { BOUNCE_TRANSITION, createRandomBounceAnimation } from '../../utils/bounceAnimation';
+import { LOGO_ANIMATION_ORDER, startLogoAnimation } from '../../utils/logoAnimations';
 
 export default function HomeLogoCard() {
   const interactionControls = useAnimationControls();
+  const outerPathControls = useAnimationControls();
+  const innerPathControls = useAnimationControls();
+  const cycleIndex = useRef(0);
   const { activePalette } = usePublicPalette();
 
   const handleLogoInteraction = () => {
     interactionControls.stop();
 
-    void interactionControls.start({
-      ...createRandomBounceAnimation(),
-      transition: BOUNCE_TRANSITION,
-    });
+    const animationName = LOGO_ANIMATION_ORDER[cycleIndex.current % LOGO_ANIMATION_ORDER.length];
+    cycleIndex.current += 1;
+
+    void startLogoAnimation(animationName, interactionControls, outerPathControls, innerPathControls);
   };
 
   return (
@@ -62,7 +66,7 @@ export default function HomeLogoCard() {
           >
             <motion.button
               type="button"
-              aria-label="Bounce Clover K logo"
+              aria-label="Animate Clover K logo"
               onClick={handleLogoInteraction}
               whileTap={{ scale: 0.88 }}
               animate={interactionControls}
@@ -93,6 +97,10 @@ export default function HomeLogoCard() {
                   size={200}
                   color={activePalette.primary}
                   strokeWidth={10}
+                  pathAnimation={{
+                    outerPathControls,
+                    innerPathControls,
+                  }}
                 />
               </Box>
             </motion.button>

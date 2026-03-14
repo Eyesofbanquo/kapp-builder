@@ -1,13 +1,8 @@
+import type { useAnimationControls } from 'framer-motion';
 import type { LogoAnimationName } from '../types/logoAnimation';
 
-/**
- * Controls interface matching the shape returned by framer-motion's
- * useAnimationControls — only the methods we actually call.
- */
-interface AnimationControlsLike {
-  start: (definition: Record<string, unknown>) => Promise<unknown>;
-  set: (definition: Record<string, unknown>) => void;
-}
+/** The controls type returned by framer-motion's useAnimationControls(). */
+type LogoAnimationControls = ReturnType<typeof useAnimationControls>;
 
 /** Fixed cycle order for the 6 pilates-themed animations. */
 export const LOGO_ANIMATION_ORDER: LogoAnimationName[] = [
@@ -24,9 +19,9 @@ export const LOGO_ANIMATION_ORDER: LogoAnimationName[] = [
 /* ------------------------------------------------------------------ */
 
 async function startBeybladeSpin(
-  wrapperControls: AnimationControlsLike,
-  outerPathControls: AnimationControlsLike,
-  innerPathControls: AnimationControlsLike,
+  wrapperControls: LogoAnimationControls,
+  outerPathControls: LogoAnimationControls,
+  innerPathControls: LogoAnimationControls,
 ) {
   const scaleTransition = { duration: 1.4, ease: [0.34, 1.56, 0.64, 1] as [number, number, number, number] };
 
@@ -51,7 +46,7 @@ async function startBeybladeSpin(
 /* ------------------------------------------------------------------ */
 
 async function startReformerStretch(
-  wrapperControls: AnimationControlsLike,
+  wrapperControls: LogoAnimationControls,
 ) {
   await wrapperControls.start({
     scaleY: [1, 1.25, 0.85, 1],
@@ -69,7 +64,7 @@ async function startReformerStretch(
 /* ------------------------------------------------------------------ */
 
 async function startRollUpCurl(
-  wrapperControls: AnimationControlsLike,
+  wrapperControls: LogoAnimationControls,
 ) {
   await wrapperControls.start({
     rotate: [0, -15, 8, 0],
@@ -88,7 +83,7 @@ async function startRollUpCurl(
 /* ------------------------------------------------------------------ */
 
 async function startHundredPulse(
-  wrapperControls: AnimationControlsLike,
+  wrapperControls: LogoAnimationControls,
 ) {
   await wrapperControls.start({
     scale: [1, 0.94, 1.04, 0.96, 1.03, 0.94, 1.04, 0.97, 1.02, 0.98, 1],
@@ -105,7 +100,7 @@ async function startHundredPulse(
 /* ------------------------------------------------------------------ */
 
 async function startTeaserBalance(
-  wrapperControls: AnimationControlsLike,
+  wrapperControls: LogoAnimationControls,
 ) {
   await wrapperControls.start({
     rotate: [0, 18, -6, 3, 0],
@@ -124,9 +119,9 @@ async function startTeaserBalance(
 /* ------------------------------------------------------------------ */
 
 async function startDeadBug(
-  wrapperControls: AnimationControlsLike,
-  outerPathControls: AnimationControlsLike,
-  innerPathControls: AnimationControlsLike,
+  wrapperControls: LogoAnimationControls,
+  outerPathControls: LogoAnimationControls,
+  innerPathControls: LogoAnimationControls,
 ) {
   // Phase 1: Flip upside down
   await wrapperControls.start({
@@ -159,8 +154,8 @@ async function startDeadBug(
 
 /** Reset path controls to clear residual transforms from per-path animations. */
 function resetPathControls(
-  outerPathControls: AnimationControlsLike,
-  innerPathControls: AnimationControlsLike,
+  outerPathControls: LogoAnimationControls,
+  innerPathControls: LogoAnimationControls,
 ) {
   outerPathControls.set({ rotate: 0, scaleX: 1, scaleY: 1 });
   innerPathControls.set({ rotate: 0, scaleX: 1, scaleY: 1 });
@@ -174,9 +169,9 @@ function resetPathControls(
  */
 export async function startLogoAnimation(
   animationName: LogoAnimationName,
-  wrapperControls: AnimationControlsLike,
-  outerPathControls: AnimationControlsLike,
-  innerPathControls: AnimationControlsLike,
+  wrapperControls: LogoAnimationControls,
+  outerPathControls: LogoAnimationControls,
+  innerPathControls: LogoAnimationControls,
 ): Promise<void> {
   // Reset wrapper to identity before each animation
   wrapperControls.set({ x: 0, y: 0, rotate: 0, scale: 1, scaleX: 1, scaleY: 1 });
