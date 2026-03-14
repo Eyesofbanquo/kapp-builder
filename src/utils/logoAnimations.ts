@@ -4,8 +4,8 @@ import type { LogoAnimationName } from '../types/logoAnimation';
 /** The controls type returned by framer-motion's useAnimationControls(). */
 type LogoAnimationControls = ReturnType<typeof useAnimationControls>;
 
-/** Fixed cycle order for the 6 pilates-themed animations. */
-export const LOGO_ANIMATION_ORDER: LogoAnimationName[] = [
+/** All available logo animations. */
+const LOGO_ANIMATIONS: LogoAnimationName[] = [
   'beybladeSpin',
   'reformerStretch',
   'rollUpCurl',
@@ -13,6 +13,20 @@ export const LOGO_ANIMATION_ORDER: LogoAnimationName[] = [
   'teaserBalance',
   'deadBug',
 ];
+
+/**
+ * Picks a random animation that differs from the previous one,
+ * so the user never sees the same animation twice in a row.
+ */
+export function pickRandomLogoAnimation(
+  previousAnimation: LogoAnimationName | null,
+): LogoAnimationName {
+  const candidates = previousAnimation
+    ? LOGO_ANIMATIONS.filter((name) => name !== previousAnimation)
+    : LOGO_ANIMATIONS;
+
+  return candidates[Math.floor(Math.random() * candidates.length)];
+}
 
 /* ------------------------------------------------------------------ */
 /*  1. Beyblade Spin                                                   */

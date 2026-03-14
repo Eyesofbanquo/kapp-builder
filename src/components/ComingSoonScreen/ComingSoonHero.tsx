@@ -3,20 +3,21 @@ import { Box, Typography } from '@mui/material';
 import { motion, useAnimationControls } from 'framer-motion';
 import CloverKLogo from '../../assets/CloverKLogo';
 import { usePublicPalette } from '../../context/PublicPaletteContext';
-import { LOGO_ANIMATION_ORDER, startLogoAnimation } from '../../utils/logoAnimations';
+import type { LogoAnimationName } from '../../types/logoAnimation';
+import { pickRandomLogoAnimation, startLogoAnimation } from '../../utils/logoAnimations';
 
 export default function ComingSoonHero() {
   const interactionControls = useAnimationControls();
   const outerPathControls = useAnimationControls();
   const innerPathControls = useAnimationControls();
-  const cycleIndex = useRef(0);
+  const previousAnimation = useRef<LogoAnimationName | null>(null);
   const { activePalette } = usePublicPalette();
 
   const handleLogoInteraction = () => {
     interactionControls.stop();
 
-    const animationName = LOGO_ANIMATION_ORDER[cycleIndex.current % LOGO_ANIMATION_ORDER.length];
-    cycleIndex.current += 1;
+    const animationName = pickRandomLogoAnimation(previousAnimation.current);
+    previousAnimation.current = animationName;
 
     void startLogoAnimation(animationName, interactionControls, outerPathControls, innerPathControls);
   };
