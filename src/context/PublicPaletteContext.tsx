@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
 import {
   defaultPublicPaletteMode,
@@ -83,17 +83,20 @@ export function PublicPaletteProvider({ children }: Props) {
 
   const activePalette = getPublicPaletteVariant(activePaletteName, activePaletteMode);
 
+  const contextValue = useMemo<PublicPaletteContextValue>(
+    () => ({
+      activePalette,
+      activePaletteMode,
+      activePaletteName,
+      paletteOptions: publicPaletteOptions,
+      setActivePaletteMode,
+      setActivePaletteName,
+    }),
+    [activePalette, activePaletteMode, activePaletteName]
+  );
+
   return (
-    <PublicPaletteContext.Provider
-      value={{
-        activePalette,
-        activePaletteMode,
-        activePaletteName,
-        paletteOptions: publicPaletteOptions,
-        setActivePaletteMode,
-        setActivePaletteName,
-      }}
-    >
+    <PublicPaletteContext.Provider value={contextValue}>
       {children}
     </PublicPaletteContext.Provider>
   );

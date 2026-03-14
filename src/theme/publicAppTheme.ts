@@ -10,7 +10,7 @@ import type {
 export const defaultPublicPaletteName: PublicPaletteName = 'pinkify';
 export const defaultPublicPaletteMode: PublicPaletteMode = 'light';
 
-export const publicPaletteCollection: Record<PublicPaletteName, PublicPaletteDefinition> = {
+const publicPaletteCollection: Record<PublicPaletteName, PublicPaletteDefinition> = {
   pinkify: {
     name: 'pinkify',
     label: 'Pinkify',
@@ -272,17 +272,11 @@ export function isPublicPaletteMode(storageValue: string): storageValue is Publi
   return storageValue === 'light' || storageValue === 'dark';
 }
 
-export function getPublicPaletteDefinition(
-  paletteName: PublicPaletteName
-): PublicPaletteDefinition {
-  return publicPaletteCollection[paletteName];
-}
-
 export function getPublicPaletteVariant(
   paletteName: PublicPaletteName,
   paletteMode: PublicPaletteMode
 ): PublicPaletteVariant {
-  return getPublicPaletteDefinition(paletteName)[paletteMode];
+  return publicPaletteCollection[paletteName][paletteMode];
 }
 
 export function getPublicAppTheme(
