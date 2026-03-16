@@ -1,20 +1,25 @@
+import { useRef } from 'react';
 import { Box, Typography } from '@mui/material';
 import { motion, useAnimationControls } from 'framer-motion';
 import CloverKLogo from '../../assets/CloverKLogo';
 import { usePublicPalette } from '../../context/PublicPaletteContext';
-import { BOUNCE_TRANSITION, createRandomBounceAnimation } from '../../utils/bounceAnimation';
+import type { LogoAnimationName } from '../../types/logoAnimation';
+import { pickRandomLogoAnimation, startLogoAnimation } from '../../utils/logoAnimations';
 
 export default function ComingSoonHero() {
   const interactionControls = useAnimationControls();
+  const outerPathControls = useAnimationControls();
+  const innerPathControls = useAnimationControls();
+  const previousAnimation = useRef<LogoAnimationName | null>(null);
   const { activePalette } = usePublicPalette();
 
   const handleLogoInteraction = () => {
     interactionControls.stop();
 
-    void interactionControls.start({
-      ...createRandomBounceAnimation(),
-      transition: BOUNCE_TRANSITION,
-    });
+    const animationName = pickRandomLogoAnimation(previousAnimation.current);
+    previousAnimation.current = animationName;
+
+    void startLogoAnimation(animationName, interactionControls, outerPathControls, innerPathControls);
   };
 
   return (
@@ -85,7 +90,7 @@ export default function ComingSoonHero() {
             >
               <motion.button
                 type="button"
-                aria-label="Bounce Clover K logo"
+                aria-label="Animate Clover K logo"
                 onClick={handleLogoInteraction}
                 whileTap={{ scale: 0.88 }}
                 animate={interactionControls}
@@ -116,6 +121,10 @@ export default function ComingSoonHero() {
                     size={220}
                     color={activePalette.primary}
                     strokeWidth={10}
+                    pathAnimation={{
+                      outerPathControls,
+                      innerPathControls,
+                    }}
                   />
                 </Box>
               </motion.button>
